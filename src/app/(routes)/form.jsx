@@ -117,32 +117,34 @@ const Form = () => {
         </div>
 
         {/* Tracks Input */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Tracks (required):</label>
-          {tracks.map((track, index) => (
-            <div key={index} className="flex mb-2">
-              <input
-                type="text"
-                placeholder="Track Name"
-                value={track.name}
-                onChange={(e) => handleTrackChange(index, 'name', e.target.value)}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mr-2"
-                required
-              />
-              <input
-                type="text"
-                placeholder="Track Description"
-                value={track.description}
-                onChange={(e) => handleTrackChange(index, 'description', e.target.value)}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                required
-              />
-            </div>
-          ))}
-          <button type="button" onClick={handleAddTrack} className="mt-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
-            Add Track
-          </button>
-        </div>
+<div className="mb-4">
+  <label className="block text-sm font-medium text-gray-700">Tracks (required):</label>
+  {tracks.map((track, index) => (
+    <div key={index} className="flex mb-2">
+      <input
+        type="text"
+        placeholder="Track Name"
+        value={track.name}
+        onChange={(e) => handleTrackChange(index, 'name', e.target.value)}
+        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mr-2"
+        required
+        style={{ height: '40px' }} // Set the fixed height for track name
+      />
+      <textarea
+        placeholder="Track Description"
+        value={track.description}
+        onChange={(e) => handleTrackChange(index, 'description', e.target.value)}
+        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 resize-y"
+        required
+        style={{ height: '40px', minHeight: '40px', maxHeight: '300px' }} // Keep the existing min/max heights
+      />
+    </div>
+  ))}
+  <button type="button" onClick={handleAddTrack} className="mt-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+    Add Track
+  </button>
+</div>
+
 
         {/* Sponsor Challenges Input */}
         <div className="mb-4">
@@ -156,14 +158,15 @@ const Form = () => {
                 onChange={(e) => handleSponsorChallengeChange(index, 'name', e.target.value)}
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mr-2"
                 required
+                style={{ height: '40px' }}
               />
-              <input
-                type="text"
+              <textarea
                 placeholder="Challenge Description"
                 value={challenge.description}
                 onChange={(e) => handleSponsorChallengeChange(index, 'description', e.target.value)}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 resize-y"
                 required
+                style={{ height: '40px', minHeight: '40px', maxHeight: '300px' }} // Set your preferred min/max heights
               />
             </div>
           ))}
@@ -184,14 +187,15 @@ const Form = () => {
                 onChange={(e) => handleToolChange(index, 'name', e.target.value)}
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mr-2"
                 required
+                style={{ height: '40px' }} // Set the fixed height for track name
               />
-              <input
-                type="text"
+              <textarea
                 placeholder="Description"
                 value={tool.description}
                 onChange={(e) => handleToolChange(index, 'description', e.target.value)}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 resize-y"
                 required
+                style={{ height: '40px', minHeight: '40px', maxHeight: '300px' }} // Set your preferred min/max heights
               />
             </div>
           ))}
@@ -203,18 +207,20 @@ const Form = () => {
         {/* Special Requirements Input */}
         <div className="mb-4">
           <label htmlFor="specialRequirements" className="block text-sm font-medium text-gray-700">
-            Any Special Requirements? (optional):
+            Special Requirements:
           </label>
-          <input
-            type="text"
+          <textarea
             id="specialRequirements"
+            placeholder='"e.g., Must support real-time collaboration", "Needs to integrate with third-party APIs"'
             value={specialRequirements}
             onChange={(e) => setSpecialRequirements(e.target.value)}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 resize-y"
+            style={{ minHeight: '50px', maxHeight: '200px' }} // Set your preferred min/max heights
           />
         </div>
 
-        <button type="submit" className="w-full bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+        {/* Submit Button */}
+        <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
           Submit
         </button>
       </form>
