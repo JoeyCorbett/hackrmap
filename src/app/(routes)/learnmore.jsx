@@ -17,8 +17,7 @@ const learnmore = () => {
                     aim to achieve. We're excited to share what we’ve built and hope you find it inspiring!
                 </p>
                 <p style={styles.paragraph}>
-                    Our project leverages various tools and technologies, including <a href="#" style={styles.link}>GitHub API</a>, 
-                    <a href="#" style={styles.link}>OpenAI API</a>, and <a href="#" style={styles.link}>Cloudflare</a> 
+                    Our project leverages various tools and technologies, including <a href="#" style={styles.link}>GitHub API</a> and <a href="#" style={styles.link}>OpenAI API</a>,
                     to generate personalized roadmaps for hackathon projects. Feel free to explore the code and learn more 
                     about how we’ve structured the app.
                 </p>
