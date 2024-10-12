@@ -1,7 +1,8 @@
 // src/App.js
 import './App.css'; 
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'; // Import necessary components from react-router-dom
-import Form from './form'; // Ensure to import your Form component
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'; 
+import Form from './form'; 
+import Dashboard from './dashboard';
 
 function App() {
   return (
@@ -44,7 +45,8 @@ function App() {
           </section>
         )} />
         
-        <Route path="/form" element={<Form />} /> {/* Define the route for your form */}
+        <Route path="/form" element={<Form />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
     </Router>
   );
