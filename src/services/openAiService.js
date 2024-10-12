@@ -11,7 +11,6 @@ const openaiApi = axios.create({
 });
 
 export const generateRoadmap = async (formData) => {
-  // Build the prompt from form data
   const prompt = `
     Generate a roadmap for a hackathon project with the following details:
     - Number of teammates: ${formData.numTeammates}
@@ -27,7 +26,7 @@ export const generateRoadmap = async (formData) => {
 
   try {
     const response = await openaiApi.post('/completions', {
-      model: 'gpt-4',  // Adjust the model as needed
+      model: 'gpt-4o', 
       prompt,
       max_tokens: 150,
     });
