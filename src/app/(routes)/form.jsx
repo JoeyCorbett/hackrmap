@@ -5,28 +5,9 @@ const Form = () => {
   const [skillLevels, setSkillLevels] = useState(['']);
   const [hackathonLength, setHackathonLength] = useState('');
   const [tracks, setTracks] = useState([{ name: '', description: '' }]);
-  const [sponsorChallenges, setSponsorChallenges] = useState([{ name: '', description: '' }]); // State to manage sponsor challenges
-  const [tools, setTools] = useState({ backend: false, frontend: false, database: false });
+  const [sponsorChallenges, setSponsorChallenges] = useState([{ name: '', description: '' }]);
+  const [preferredTools, setPreferredTools] = useState([{ name: '', description: '' }]);
   const [specialRequirements, setSpecialRequirements] = useState('');
-
-  const handleNumTeammatesChange = (e) => {
-    const value = Number(e.target.value);
-    if (value > 10) {
-      return;
-    }
-    setNumTeammates(value);
-  
-    // Update skill levels array based on the number of teammates
-    const newSkillLevels = [...skillLevels];
-    while (newSkillLevels.length < value) {
-      newSkillLevels.push(''); // Add empty skill levels for new teammates
-    }
-    while (newSkillLevels.length > value) {
-      newSkillLevels.pop(); // Remove skill levels for teammates that are no longer needed
-    }
-    setSkillLevels(newSkillLevels);
-  };
-  
 
   const handleSkillLevelChange = (index, value) => {
     const newSkillLevels = [...skillLevels];
@@ -34,11 +15,8 @@ const Form = () => {
     setSkillLevels(newSkillLevels);
   };
 
-  const handleHackathonLengthChange = (e) => {
-    const value = Number(e.target.value);
-    if (value >= 1 && value <= 168) {
-      setHackathonLength(value);
-    }
+  const handleAddTrack = () => {
+    setTracks([...tracks, { name: '', description: '' }]);
   };
 
   const handleTrackChange = (index, field, value) => {
@@ -47,8 +25,8 @@ const Form = () => {
     setTracks(newTracks);
   };
 
-  const handleAddTrack = () => {
-    setTracks([...tracks, { name: '', description: '' }]);
+  const handleAddSponsorChallenge = () => {
+    setSponsorChallenges([...sponsorChallenges, { name: '', description: '' }]);
   };
 
   const handleSponsorChallengeChange = (index, field, value) => {
@@ -57,8 +35,14 @@ const Form = () => {
     setSponsorChallenges(newChallenges);
   };
 
-  const handleAddSponsorChallenge = () => {
-    setSponsorChallenges([...sponsorChallenges, { name: '', description: '' }]);
+  const handleAddTool = () => {
+    setPreferredTools([...preferredTools, { name: '', description: '' }]);
+  };
+
+  const handleToolChange = (index, field, value) => {
+    const newTools = [...preferredTools];
+    newTools[index][field] = value;
+    setPreferredTools(newTools);
   };
 
   const handleSubmit = (e) => {
@@ -69,14 +53,15 @@ const Form = () => {
       hackathonLength,
       tracks,
       sponsorChallenges,
-      tools,
+      preferredTools,
       specialRequirements,
     });
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-gray-100 p-6">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md max-w-lg w-full mx-auto">
+    <div className="flex flex-col items-center justify-start bg-gray-100 min-h-screen p-6">
+      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md max-w-lg w-full">
+        {/* Number of Teammates Input */}
         <div className="mb-4">
           <label htmlFor="numTeammates" className="block text-sm font-medium text-gray-700">
             Number of Teammates (required):
@@ -85,22 +70,23 @@ const Form = () => {
             type="number"
             id="numTeammates"
             value={numTeammates}
-            onChange={(e) => handleNumTeammatesChange(e)}
+            onChange={(e) => setNumTeammates(e.target.value)}
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             required
             min="1"
-            max="10"
+            max="8"
           />
         </div>
 
+        {/* Individual Skill Levels Input */}
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
+          <label htmlFor="skillLevel" className="block text-sm font-medium text-gray-700">
             Individual Skill Levels (required):
           </label>
-          {Array.from({ length: numTeammates }, (_, index) => (
+          {skillLevels.map((level, index) => (
             <select
               key={index}
-              value={skillLevels[index]}
+              value={level}
               onChange={(e) => handleSkillLevelChange(index, e.target.value)}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
               required
@@ -113,6 +99,7 @@ const Form = () => {
           ))}
         </div>
 
+        {/* Hackathon Length Input */}
         <div className="mb-4">
           <label htmlFor="hackathonLength" className="block text-sm font-medium text-gray-700">
             Hackathon Length (required - hours):
@@ -121,7 +108,7 @@ const Form = () => {
             type="number"
             id="hackathonLength"
             value={hackathonLength}
-            onChange={handleHackathonLengthChange}
+            onChange={(e) => setHackathonLength(e.target.value)}
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             required
             min="1"
@@ -129,101 +116,91 @@ const Form = () => {
           />
         </div>
 
-        {/* Track Input Fields */}
+        {/* Tracks Input */}
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Tracks (required):
-          </label>
+          <label className="block text-sm font-medium text-gray-700">Tracks (required):</label>
           {tracks.map((track, index) => (
-            <div key={index} className="space-y-2 mt-2">
+            <div key={index} className="flex mb-2">
               <input
                 type="text"
+                placeholder="Track Name"
                 value={track.name}
                 onChange={(e) => handleTrackChange(index, 'name', e.target.value)}
-                placeholder={`Track Name ${index + 1}`}
-                className="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mr-2"
+                required
               />
-              <textarea
+              <input
+                type="text"
+                placeholder="Track Description"
                 value={track.description}
                 onChange={(e) => handleTrackChange(index, 'description', e.target.value)}
-                placeholder={`Track Description ${index + 1}`}
-                className="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                required
               />
             </div>
           ))}
-          <button
-            type="button"
-            onClick={handleAddTrack}
-            className="mt-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
-          >
+          <button type="button" onClick={handleAddTrack} className="mt-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
             Add Track
           </button>
         </div>
 
-        {/* Sponsor Challenges Input Fields */}
+        {/* Sponsor Challenges Input */}
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">
-            Sponsor Challenges (optional):
-          </label>
+          <label className="block text-sm font-medium text-gray-700">Sponsor Challenges:</label>
           {sponsorChallenges.map((challenge, index) => (
-            <div key={index} className="space-y-2 mt-2">
+            <div key={index} className="flex mb-2">
               <input
                 type="text"
+                placeholder="Challenge Name"
                 value={challenge.name}
                 onChange={(e) => handleSponsorChallengeChange(index, 'name', e.target.value)}
-                placeholder={`Challenge Name ${index + 1}`}
-                className="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mr-2"
+                required
               />
-              <textarea
+              <input
+                type="text"
+                placeholder="Challenge Description"
                 value={challenge.description}
                 onChange={(e) => handleSponsorChallengeChange(index, 'description', e.target.value)}
-                placeholder={`Challenge Description ${index + 1}`}
-                className="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                required
               />
             </div>
           ))}
-          <button
-            type="button"
-            onClick={handleAddSponsorChallenge}
-            className="mt-2 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
-          >
+          <button type="button" onClick={handleAddSponsorChallenge} className="mt-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
             Add Sponsor Challenge
           </button>
         </div>
 
+        {/* Preferred Tools Input */}
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Preferred Tools/Technologies (optional):</label>
-          <div className="mt-2 space-y-2">
-            <label className="flex items-center">
+          <label className="block text-sm font-medium text-gray-700">Preferred Tools/Technologies:</label>
+          {preferredTools.map((tool, index) => (
+            <div key={index} className="flex mb-2">
               <input
-                type="checkbox"
-                checked={tools.backend}
-                onChange={(e) => setTools({ ...tools, backend: e.target.checked })}
-                className="mr-2"
+                type="text"
+                placeholder="Tool/Technology Name"
+                value={tool.name}
+                onChange={(e) => handleToolChange(index, 'name', e.target.value)}
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mr-2"
+                required
               />
-              Backend
-            </label>
-            <label className="flex items-center">
               <input
-                type="checkbox"
-                checked={tools.frontend}
-                onChange={(e) => setTools({ ...tools, frontend: e.target.checked })}
-                className="mr-2"
+                type="text"
+                placeholder="Description"
+                value={tool.description}
+                onChange={(e) => handleToolChange(index, 'description', e.target.value)}
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                required
               />
-              Frontend
-            </label>
-            <label className="flex items-center">
-              <input
-                type="checkbox"
-                checked={tools.database}
-                onChange={(e) => setTools({ ...tools, database: e.target.checked })}
-                className="mr-2"
-              />
-              Database
-            </label>
-          </div>
+            </div>
+          ))}
+          <button type="button" onClick={handleAddTool} className="mt-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+            Add Tool/Technology
+          </button>
         </div>
 
+        {/* Special Requirements Input */}
         <div className="mb-4">
           <label htmlFor="specialRequirements" className="block text-sm font-medium text-gray-700">
             Any Special Requirements? (optional):
