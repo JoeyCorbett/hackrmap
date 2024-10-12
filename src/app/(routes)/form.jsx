@@ -45,7 +45,7 @@ const Form = () => {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
+    <div className="bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 flex items-center justify-center h-screen bg-gray-100">
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md max-w-lg w-full">
         <div className="mb-4">
           <label htmlFor="numTeammates" className="block text-sm font-medium text-gray-700">
