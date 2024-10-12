@@ -91,7 +91,7 @@ const MyForm = () => {
     };
 
     return (
-      <div className="flex flex-col items-center justify-start bg-gray-900 min-h-screen p-6">
+      <div className="flex flex-col items-center justify-start bg-gray-900 min-h-screen p-6 text-base">
         <form onSubmit={handleSubmit} className="bg-[#1e273b] p-6 rounded-lg shadow-md max-w-lg w-full">
             {/* Number of Teammates Input */}
             <div className="mb-4">
