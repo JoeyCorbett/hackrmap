@@ -16,7 +16,7 @@ body,
   height: 100%;
   width: 100%;
   @apply text-lg;
-  /* @apply bg-white; */
+  @apply bg-gray-900;
   @apply dark:bg-black;
 
 }
