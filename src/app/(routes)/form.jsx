@@ -1,30 +1,47 @@
 import { useState } from 'react';
 
 const Form = () => {
-  const [numTeammates, setNumTeammates] = useState('');
-  const [skillLevel, setSkillLevel] = useState('');
+  const [numTeammates, setNumTeammates] = useState(1);
+  const [skillLevels, setSkillLevels] = useState(['']);
   const [hackathonLength, setHackathonLength] = useState('');
   const [track, setTrack] = useState('');
   const [sponsorChallenge, setSponsorChallenge] = useState('');
-  const [tools, setTools] = useState({
-    backend: false,
-    frontend: false,
-    database: false,
-  });
+  const [tools, setTools] = useState({ backend: false, frontend: false, database: false });
   const [specialRequirements, setSpecialRequirements] = useState('');
+
+  const handleNumTeammatesChange = (e) => {
+    const value = Number(e.target.value);
+    setNumTeammates(value);
+
+    // Update skill levels array based on the number of teammates
+    const newSkillLevels = [...skillLevels];
+    while (newSkillLevels.length < value) {
+      newSkillLevels.push(''); // Add empty skill levels for new teammates
+    }
+    while (newSkillLevels.length > value) {
+      newSkillLevels.pop(); // Remove skill levels for teammates that are no longer needed
+    }
+    setSkillLevels(newSkillLevels);
+  };
+
+  const handleSkillLevelChange = (index, value) => {
+    const newSkillLevels = [...skillLevels];
+    newSkillLevels[index] = value; // Update skill level for specific teammate
+    setSkillLevels(newSkillLevels);
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = {
+    // Handle form submission logic here
+    console.log({
       numTeammates,
-      skillLevel,
+      skillLevels,
       hackathonLength,
       track,
       sponsorChallenge,
       tools,
       specialRequirements,
-    };
-    console.log(formData);
+    });
   };
 
   return (
@@ -38,29 +55,32 @@ const Form = () => {
             type="number"
             id="numTeammates"
             value={numTeammates}
-            onChange={(e) => setNumTeammates(e.target.value)}
+            onChange={handleNumTeammatesChange}
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             required
-            min="1" // Ensures that only non-negative numbers can be entered
-        />
+            min="1" // Ensures that at least one teammate is entered
+          />
         </div>
 
+        {/* Skill Levels for Each Teammate */}
         <div className="mb-4">
-          <label htmlFor="skillLevel" className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-gray-700">
             Individual Skill Levels (required):
           </label>
-          <select
-            id="skillLevel"
-            value={skillLevel}
-            onChange={(e) => setSkillLevel(e.target.value)}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-            required
-          >
-            <option value="" disabled>Select Skill Level</option>
-            <option value="beginner">Beginner</option>
-            <option value="intermediate">Intermediate</option>
-            <option value="advanced">Advanced</option>
-          </select>
+          {skillLevels.map((level, index) => (
+            <select
+              key={index}
+              value={level}
+              onChange={(e) => handleSkillLevelChange(index, e.target.value)}
+              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+              required
+            >
+              <option value="" disabled>Select Skill Level</option>
+              <option value="beginner">Beginner</option>
+              <option value="intermediate">Intermediate</option>
+              <option value="advanced">Advanced</option>
+            </select>
+          ))}
         </div>
 
         <div className="mb-4">
