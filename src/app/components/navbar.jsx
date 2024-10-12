@@ -40,7 +40,24 @@ const Navbar = () => {
               >
                 Dashboard
               </Link>
-              {/* Add more links as needed */}
+              <Link
+                to="/manageproject"
+                className="block py-2 px-4 rounded hover:bg-gray-700"
+              >
+                Manage Projects
+              </Link>
+              <Link
+                to="/form"
+                className="block py-2 px-4 rounded hover:bg-gray-700"
+              >
+                Back to Form
+              </Link>
+              <Link
+                to="/LearnMore"
+                className="block py-2 px-4 rounded hover:bg-gray-700"
+              >
+                Learn More
+              </Link>
             </nav>
           </aside>
         </div>
