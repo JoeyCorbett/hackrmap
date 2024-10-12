@@ -17,7 +17,8 @@ const Dashboard = () => {
       const generatedRoadmap = await generateRoadmap(prompt); // Call your OpenAI function
 
       // Update roadmap text and add new nodes to the flow
-      setRoadmap(generatedRoadmap);
+      // setRoadmap(generatedRoadmap);
+      console.log('Generated Roadmap:', generatedRoadmap);
     } catch (error) {
       setRoadmap("Error generating roadmap");
     } finally {

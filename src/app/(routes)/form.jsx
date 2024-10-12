@@ -41,9 +41,9 @@ const MyForm = () => {
 
     const resetForm = () => {
         // Reset all the form fields to their initial state
-        setNumTeammates(0);
+        setNumTeammates(1);
         setSkillLevels(['']);
-        setHackathonLength(0);
+        setHackathonLength(1);
         setTracks([{ name: '', description: '' }]);
         setSponsorChallenges([{ name: '', description: '' }]);
         setPreferredTools([{ name: '', description: '' }]);
@@ -79,9 +79,7 @@ const MyForm = () => {
 
             // Handle the response from the backend
             if (response) {
-                setResponseMessage('Success! Roadmap generated.'); 
-                resetForm();
-                navigate('/dashboard');
+                navigate('/dashboard', { state: { roadmap: response.roadmap } });
             } else {
                 setResponseMessage('Error generating roadmap'); 
             }
