@@ -1,5 +1,4 @@
 import React, { useState, useCallback } from 'react';
-import Loading from '../components/loader';
 import {
   ReactFlow,
   Controls,
