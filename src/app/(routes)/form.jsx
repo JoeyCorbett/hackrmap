@@ -40,6 +40,7 @@ const Form = () => {
           onChange={(e) => setNumTeammates(e.target.value)}
           className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
           required
+          min="0" // Ensures that only non-negative numbers can be entered
         />
       </div>
 
