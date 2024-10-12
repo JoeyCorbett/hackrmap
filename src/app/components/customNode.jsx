@@ -1,16 +1,8 @@
 import React, { memo, useState } from "react";
 import { Handle, Position } from "@xyflow/react";
-import SidePanel from "./sidePanel"; // Ensure this path is correct
+import SidePanel from "./sidePanel";
 
-// CustomNode Component
-const CustomNode = memo(({ data, isConnectable, onClick }) => {
-  const handleNodeClick = (e) => {
-    e.stopPropagation(); // Prevent handle click event from propagating
-    onClick(data); // Call the parent function to set the active node
-  };
-
-  console.log('11111111111111', data)
-
+const CustomNode = memo(({ data, isConnectable }) => {
   return (
     <>
       <Handle
@@ -19,12 +11,9 @@ const CustomNode = memo(({ data, isConnectable, onClick }) => {
         style={{ background: "#555" }}
         isConnectable={isConnectable}
       />
-      <button
-        className="flex flex-col p-2 bg-gray-200 rounded shadow hover:bg-gray-300"
-        onClick={handleNodeClick} // Handle click event
-      >
+      <div className="flex flex-col p-2 bg-gray-200 rounded shadow hover:bg-gray-300">
         <span className="font-bold cursor-pointer">{data.label}</span>
-      </button>
+      </div>
       <Handle
         type="source"
         position={Position.Right}
