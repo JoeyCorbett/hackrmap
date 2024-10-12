@@ -30,7 +30,7 @@ const Dashboard = () => {
       <NavBar />
       
       {/* Dashboard content - ensure it's styled to take up remaining screen space */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="map-container">
         {/* Placeholder for the Map and other dashboard components */}
         <Map />
       </div>
