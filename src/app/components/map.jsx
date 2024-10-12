@@ -36,16 +36,6 @@ const Map = () => {
   );
 
   return (
-    <div className="flex h-screen bg-gray-100">
-      <aside className="w-64 bg-gray-800 text-gray-200 flex flex-col">
-        <div className="text-xl font-bold p-4 bg-gray-900 text-center">Project Scoping Tool</div>
-        <nav className="flex-1 px-4 py-2 space-y-2">
-          <a href="#" className="block py-2 px-4 rounded hover:bg-gray-700">Dashboard</a>
-          <a href="#" className="block py-2 px-4 rounded hover:bg-gray-700">Manage Projects</a>
-          <a href="#" className="block py-2 px-4 rounded hover:bg-gray-700">Settings</a>
-        </nav>
-      </aside>
-
       <div className="flex-1 flex flex-col">
         <header className="bg-white shadow-md p-4">
           <h1 className="text-xl font-bold text-gray-800">Generate Your Project Roadmap</h1>
@@ -70,7 +60,7 @@ const Map = () => {
           </div>
         </main>
       </div>
-    </div>
+    
   );
 };
 

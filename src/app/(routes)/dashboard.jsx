@@ -73,7 +73,7 @@ const Dashboard = () => {
             <h2 className="text-3xl font-bold text-gray-800 mb-4">Generated Roadmap</h2>
             <div className="mt-4 text-lg">
               {loading ? (
-                <p>Loading roadmap...</p>
+                <p>https://lottie.host/embed/7cbaa080-4a7b-4d56-b3a9-67bef9c743ab/atz8fX9e5Y.json</p>
               ) : (
                 <pre className="text-gray-800 whitespace-pre-wrap text-xl">
                   {roadmap || 'No roadmap generated yet.'}
