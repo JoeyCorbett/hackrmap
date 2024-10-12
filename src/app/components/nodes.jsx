@@ -1,13 +1,12 @@
+import NodeFlow from './nodeFlow';
+import { initialNodes } from './initialNodes'; // Ensure this path is correct
 
-import React from 'react';
-import NodeContainer from './customNode';
-import { initialNodes } from './initialNodes';
-
-const Nodes = () => {
-  
+const App = () => {
   return (
-    <NodeContainer nodes={initialNodes} />
-  )
-}
+    <div>
+      <NodeFlow nodes={initialNodes} />
+    </div>
+  );
+};
 
 export default Nodes;
