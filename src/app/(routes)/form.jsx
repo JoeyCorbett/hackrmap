@@ -1,21 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const apiUrl = 'http://localhost:3001/submit-form';
+
 // Function to submit form data to the backend
 const submitForm = async (formData) => {
-    const response = await fetch('http://localhost:3001/submit-form', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-    });
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
 
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        if (!response.ok) {
+            throw new Error('Error submitting form data');
+        }
+
+        return await response.json();  // Backend response
+    } catch (error) {
+        console.error('API Error:', error);
+        throw error;
     }
-
-    return response.json(); // Assuming the response contains JSON
 };
 
 const MyForm = () => {
@@ -74,6 +81,7 @@ const MyForm = () => {
             if (response) {
                 setResponseMessage('Success! Roadmap generated.'); 
                 resetForm();
+                navigate('/dashboard');
             } else {
                 setResponseMessage('Error generating roadmap'); 
             }

@@ -1,8 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const OpenAI = require('openai');
+// const OpenAI = require('openai');
 const connectDB = require('./config/database');
+const FormData = require('./models/FormData');
 require('dotenv').config(); 
 
 const app = express();
@@ -16,27 +17,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Connect to MongoDB
 connectDB();
 
-// Initialize OpenAI with API Key from .env
-const configuration = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-const openai = new OpenAI(configuration);
-
-// Function to generate the prompt for OpenAI based on form data
-function generateOpenAIPrompt(formData) {
-  return `Generate a detailed roadmap for a hackathon project with the following details:
-    - Number of teammates: ${formData.numTeammates}
-    - Skill levels: ${formData.skillLevels.join(', ')}
-    - Hackathon duration: ${formData.hackathonLength} hours
-    - Tracks: ${formData.tracks.map(track => track.name).join(', ')}
-    - Sponsor challenges: ${formData.sponsorChallenges.map(challenge => challenge.name).join(', ')}
-    - Preferred tools: ${formData.preferredTools.map(tool => tool.name).join(', ')}
-    - Special requirements: ${formData.specialRequirements || 'None'}
-  
-  Create a project roadmap for this hackathon project.`;
-}
-
-// Endpoint to handle form submission and generate roadmap using OpenAI
+// Endpoint to handle form submission and save to MongoDB
 app.post('/submit-form', async (req, res) => {
   const {
     numTeammates,
@@ -59,23 +40,25 @@ app.post('/submit-form', async (req, res) => {
   });
 
   try {
-    // Generate prompt from form data
-    const prompt = generateOpenAIPrompt(req.body);
-
-    // Call OpenAI API to generate the roadmap
-    const openaiResponse = await openai.createCompletion({
-      model: 'gpt-4o',
-      prompt: prompt,
-      max_tokens: 500,
+    // Create a new document in MongoDB with the form data
+    const newFormData = new FormData({
+      numTeammates,
+      skillLevels,
+      hackathonLength,
+      tracks,
+      sponsorChallenges,
+      preferredTools,
+      specialRequirements,
     });
 
-    const roadmap = openaiResponse.data.choices[0].text.trim();
+    // Save the form data to the database
+    await newFormData.save();
 
-    // Send the generated roadmap back to the frontend
-    res.status(200).json({ roadmap });
+    // Send a success message back to the frontend
+    res.status(200).json({ message: 'Form submitted successfully and saved to the database!' });
   } catch (error) {
-    console.error('Error with OpenAI:', error);
-    res.status(500).json({ error: 'Error generating roadmap' });
+    console.error('Error saving form data:', error);
+    res.status(500).json({ error: 'Error saving form data to the database' });
   }
 });
 
