@@ -2,7 +2,7 @@
 import React from 'react';
 
 const SidePanel = ({ node, onClose }) => {
-  if (!node) return null; // Don't render if there's no active node
+  if (!node) return null; 
 
   return (
     <div className="fixed left-0 top-0 w-1/4 h-full bg-white shadow-lg p-4">
