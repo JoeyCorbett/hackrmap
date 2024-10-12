@@ -15,8 +15,8 @@ body,
 .app {
   height: 100%;
   width: 100%;
-  @apply text-sm;
-  @apply bg-white;
+  @apply text-lg;
+  /* @apply bg-white; */
   @apply dark:bg-black;
 
 }

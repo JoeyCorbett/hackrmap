@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import Loading from '../components/loader';
 import {
   ReactFlow,
   Controls,
@@ -48,13 +49,13 @@ const Map = () => {
 
   return (
     <div className="flex-1 flex flex-col">
-      <header className="bg-white shadow-md p-4">
-        <h1 className="text-xl font-bold text-gray-800">Generate Your Project Roadmap</h1>
-      </header>
 
-      <main className="flex-1 p-6 bg-gray-100 space-y-8 relative"> {/* Added relative positioning */}
-        <div className="bg-white p-6 rounded-lg shadow-lg" style={{ height: '600px' }}>
-          <h2 className="text-3xl font-bold text-gray-800 mb-4">Visual Roadmap with Sub-Flows</h2>
+      <main className="flex-1 p-6 relative"> {/* Added relative positioning */}
+        <div className=" p-6 rounded-lg shadow-lg" style={{ height: '600px' }}>
+          <h2 className="text-4xl font-bold text-white mb-4">Visual Roadmap with Sub-Flows</h2>
+          {/* {nodes.length === 0 && <Loading />}  */}
+          {/* Added loading animation when nodes are empty */}
+
           <ReactFlow
             nodes={nodes}
             edges={edges}
