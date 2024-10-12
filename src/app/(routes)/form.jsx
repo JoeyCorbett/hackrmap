@@ -97,7 +97,7 @@ const MyForm = () => {
         <form onSubmit={handleSubmit} className="bg-[#1e273b] p-6 rounded-lg shadow-md max-w-lg w-full">
             {/* Number of Teammates Input */}
             <div className="mb-4">
-                <label htmlFor="numTeammates" className="block text-sm font-medium text-[#909ec6]">
+                <label htmlFor="numTeammates" className="block text-sm font-medium text-[#b3c0e3]">
                     Number of Teammates (required):
                 </label>
                 <input
@@ -123,7 +123,7 @@ const MyForm = () => {
             {/* Skill Levels Input */}
             {Array.from({ length: numTeammates }).map((_, index) => (
                 <div className="mb-4" key={index}>
-                    <label htmlFor={`skillLevel-${index}`} className="block text-sm font-medium text-[#909ec6]">
+                    <label htmlFor={`skillLevel-${index}`} className="block text-sm font-medium text-[#b3c0e3]">
                         Skill Level for Teammate {index + 1} (required):
                     </label>
                     <select
@@ -147,7 +147,7 @@ const MyForm = () => {
 
             {/* Hackathon Length Input */}
 <           div className="mb-4">
-                <label htmlFor="hackathonLength" className="block text-sm font-medium text-[#909ec6]">
+                <label htmlFor="hackathonLength" className="block text-sm font-medium text-[#b3c0e3]">
                     Hackathon Length (in hours):
                 </label>
                 <input
@@ -172,7 +172,7 @@ const MyForm = () => {
 
             {/* Tracks Input */}
             <div className="mb-4">
-                <label className="block text-sm font-medium text-[#909ec6]">Tracks (optional):</label>
+                <label className="block text-sm font-medium text-[#b3c0e3]">Tracks (optional):</label>
                 {tracks.map((track, index) => (
                     <div key={index} className="flex mb-2">
                         <input
@@ -210,7 +210,7 @@ const MyForm = () => {
 
             {/* Sponsor Challenges Input */}
             <div className="mb-4">
-                <label className="block text-sm font-medium text-[#909ec6]">Sponsor Challenges (optional):</label>
+                <label className="block text-sm font-medium text-[#b3c0e3]">Sponsor Challenges (optional):</label>
                 {sponsorChallenges.map((challenge, index) => (
                     <div key={index} className="flex mb-2">
                         <input
@@ -248,7 +248,7 @@ const MyForm = () => {
 
             {/* Preferred Tools Input */}
             <div className="mb-4">
-                <label className="block text-sm font-medium text-[#909ec6]">Preferred Tools (optional):</label>
+                <label className="block text-sm font-medium text-[#b3c0e3]">Preferred Tools (optional):</label>
                 {preferredTools.map((tool, index) => (
                     <div key={index} className="flex mb-2">
                         <input
@@ -286,7 +286,7 @@ const MyForm = () => {
 
             {/* Special Requirements Input */}
             <div className="mb-4">
-                <label htmlFor="specialRequirements" className="block text-sm font-medium text-[#909ec6]">
+                <label htmlFor="specialRequirements" className="block text-sm font-medium text-[#b3c0e3]">
                     Special Requirements (optional):
                 </label>
                 <textarea
