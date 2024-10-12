@@ -45,7 +45,7 @@ const Form = () => {
   };
 
   return (
-    <div className="bg-gray-100 p-6">
+    <div className="flex flex-col min-h-screen bg-gray-100 p-6">
       <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md max-w-lg w-full mx-auto">
         <div className="mb-4">
           <label htmlFor="numTeammates" className="block text-sm font-medium text-gray-700">
@@ -55,7 +55,7 @@ const Form = () => {
             type="number"
             id="numTeammates"
             value={numTeammates}
-            onChange={handleNumTeammatesChange}
+            onChange={(e) => handleNumTeammatesChange(e)}
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             required
             min="1" // Ensures that only non-negative numbers can be entered
@@ -66,10 +66,10 @@ const Form = () => {
           <label className="block text-sm font-medium text-gray-700">
             Individual Skill Levels (required):
           </label>
-          {skillLevels.map((skill, index) => (
+          {Array.from({ length: numTeammates }, (_, index) => (
             <select
               key={index}
-              value={skill}
+              value={skillLevels[index]}
               onChange={(e) => handleSkillLevelChange(index, e.target.value)}
               className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
               required
