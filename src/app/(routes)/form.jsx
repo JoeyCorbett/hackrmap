@@ -66,8 +66,8 @@ const Form = () => {
         </label>
         <select
           id="skillLevel"
-          value={skillLevel}
-          onChange={(e) => setSkillLevel(e.target.value)}
+          value={skillLevels}
+          onChange={(e) => setSkillLevels(e.target.value)}
           className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
           required
         >
