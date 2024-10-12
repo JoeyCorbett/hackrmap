@@ -4,7 +4,7 @@ const Form = () => {
   const [numTeammates, setNumTeammates] = useState(1);
   const [skillLevels, setSkillLevels] = useState(['']);
   const [hackathonLength, setHackathonLength] = useState('');
-  const [tracks, setTracks] = useState(['']); // State to manage tracks
+  const [tracks, setTracks] = useState([{ name: '', description: '' }]); // State to manage tracks
   const [sponsorChallenge, setSponsorChallenge] = useState('');
   const [tools, setTools] = useState({ backend: false, frontend: false, database: false });
   const [specialRequirements, setSpecialRequirements] = useState('');
@@ -30,14 +30,14 @@ const Form = () => {
     setSkillLevels(newSkillLevels);
   };
 
-  const handleTrackChange = (index, value) => {
+  const handleTrackChange = (index, field, value) => {
     const newTracks = [...tracks];
-    newTracks[index] = value; // Update the specific track input
+    newTracks[index][field] = value; // Update the specific track input
     setTracks(newTracks);
   };
 
   const handleAddTrack = () => {
-    setTracks([...tracks, '']); // Add a new blank track input field
+    setTracks([...tracks, { name: '', description: '' }]); // Add a new blank track input field
   };
 
   const handleSubmit = (e) => {
@@ -111,12 +111,18 @@ const Form = () => {
             Tracks (required):
           </label>
           {tracks.map((track, index) => (
-            <div key={index} className="flex items-center space-x-2 mt-2">
+            <div key={index} className="space-y-2 mt-2">
               <input
                 type="text"
-                value={track}
-                onChange={(e) => handleTrackChange(index, e.target.value)}
-                placeholder={`Track ${index + 1}`}
+                value={track.name}
+                onChange={(e) => handleTrackChange(index, 'name', e.target.value)}
+                placeholder={`Track Name ${index + 1}`}
+                className="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
+              />
+              <textarea
+                value={track.description}
+                onChange={(e) => handleTrackChange(index, 'description', e.target.value)}
+                placeholder={`Track Description ${index + 1}`}
                 className="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
               />
             </div>
