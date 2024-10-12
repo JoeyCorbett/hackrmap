@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { submitForm } from '../../services/api';
 
 const Form = () => {
   const [numTeammates, setNumTeammates] = useState(1);
@@ -8,6 +9,8 @@ const Form = () => {
   const [sponsorChallenges, setSponsorChallenges] = useState([{ name: '', description: '' }]);
   const [preferredTools, setPreferredTools] = useState([{ name: '', description: '' }]);
   const [specialRequirements, setSpecialRequirements] = useState('');
+  const [loading, setLoading] = useState(false); // Loading state
+  const [responseMessage, setResponseMessage] = useState(''); // Message for displaying success or error
 
   useEffect(() => {
     const updatedSkillLevels = [...Array(numTeammates)].map((_, index) => skillLevels[index] || '');
@@ -74,7 +77,8 @@ const Form = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+    setLoading(true); // Start loading state
+
     // Create an object with the form data
     const formData = {
       numTeammates,
@@ -85,29 +89,23 @@ const Form = () => {
       preferredTools,
       specialRequirements,
     };
-  
+
     try {
-      const response = await fetch('https://hackrmap-worker.jcwins8211.workers.dev/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-  
-      // Handle the response from the worker
-      if (response.ok) {
-        const data = await response.json();
-        console.log('Success:', data);
-        // You can also display the results or handle them as needed
+      // Call the API function to submit the form data to the Node.js backend
+      const response = await submitForm(formData);
+
+      // Handle the response from the backend
+      if (response) {
+        setResponseMessage('Success! Roadmap generated: ' + JSON.stringify(response)); // Update with success message
       } else {
-        console.error('Error:', response.statusText);
+        setResponseMessage('Error generating roadmap'); // Update with error message
       }
     } catch (error) {
-      console.error('Fetch error:', error);
+      setResponseMessage('Error submitting form: ' + error.message); // Handle fetch error
+    } finally {
+      setLoading(false); // Stop loading state
     }
   };
-  
 
   return (
     <div className="flex flex-col items-center justify-start bg-gray-100 min-h-screen p-6">
@@ -179,7 +177,6 @@ const Form = () => {
                 onChange={(e) => handleTrackChange(index, 'name', e.target.value)}
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mr-2"
                 required
-                style={{ height: '40px' }} // Set the fixed height for track name
               />
               <textarea
                 placeholder="Track Description"
@@ -187,22 +184,26 @@ const Form = () => {
                 onChange={(e) => handleTrackChange(index, 'description', e.target.value)}
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 resize-y"
                 required
-                style={{ height: '40px', minHeight: '40px', maxHeight: '300px' }} // Keep the existing min/max heights
               />
               <button
                 type="button"
                 onClick={() => handleRemoveTrack(index)}
                 className="mt-1 bg-red-600 text-white py-1 px-2 rounded-md hover:bg-red-700 mx-2"
-                style={{ height: '40px', width: '60px' }}
               >
                 -
               </button>
             </div>
           ))}
-          <button type="button" onClick={handleAddTrack} className="mt-1 mb-2  bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+          <button
+            type="button"
+            onClick={handleAddTrack}
+            className="mt-1 mb-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
+          >
             Add Track
           </button>
         </div>
+
+
 
         {/* Sponsor Challenges Input */}
         <div className="mb-4">
