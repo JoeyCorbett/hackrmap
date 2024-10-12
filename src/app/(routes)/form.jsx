@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 const Form = () => {
   const [numTeammates, setNumTeammates] = useState(1);
@@ -8,6 +8,19 @@ const Form = () => {
   const [sponsorChallenges, setSponsorChallenges] = useState([{ name: '', description: '' }]);
   const [preferredTools, setPreferredTools] = useState([{ name: '', description: '' }]);
   const [specialRequirements, setSpecialRequirements] = useState('');
+
+  useEffect(() => {
+    const updatedSkillLevels = [...Array(numTeammates)].map((_, index) => skillLevels[index] || '');
+    setSkillLevels(updatedSkillLevels);
+  }, [numTeammates]);
+
+  // Function to handle numeric input changes and restrict direct input
+  const handleNumberInput = (setValue, min, max) => (e) => {
+    const value = Number(e.target.value);
+    if (e.target.value === '' || (value >= min && value <= max)) {
+      setValue(value);
+    }
+  };
 
   const handleSkillLevelChange = (index, value) => {
     const newSkillLevels = [...skillLevels];
@@ -70,7 +83,7 @@ const Form = () => {
             type="number"
             id="numTeammates"
             value={numTeammates}
-            onChange={(e) => setNumTeammates(e.target.value)}
+            onChange={handleNumberInput(setNumTeammates, 1, 8)} // Use the new function here
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             required
             min="1"
@@ -108,7 +121,7 @@ const Form = () => {
             type="number"
             id="hackathonLength"
             value={hackathonLength}
-            onChange={(e) => setHackathonLength(e.target.value)}
+            onChange={handleNumberInput(setHackathonLength, 1, 168)} // Use the new function here
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             required
             min="1"
@@ -144,7 +157,6 @@ const Form = () => {
             Add Track
           </button>
         </div>
-
 
         {/* Sponsor Challenges Input */}
         <div className="mb-4">
@@ -190,7 +202,7 @@ const Form = () => {
                 style={{ height: '40px' }} // Set the fixed height for track name
               />
               <textarea
-                placeholder="Description"
+                placeholder="Tool/Technology Description"
                 value={tool.description}
                 onChange={(e) => handleToolChange(index, 'description', e.target.value)}
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 resize-y"
@@ -200,7 +212,7 @@ const Form = () => {
             </div>
           ))}
           <button type="button" onClick={handleAddTool} className="mt-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
-            Add Tool/Technology
+            Add Preferred Tool
           </button>
         </div>
 
@@ -211,11 +223,10 @@ const Form = () => {
           </label>
           <textarea
             id="specialRequirements"
-            placeholder='"e.g., Must support real-time collaboration", "Needs to integrate with third-party APIs"'
             value={specialRequirements}
             onChange={(e) => setSpecialRequirements(e.target.value)}
             className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 resize-y"
-            style={{ minHeight: '50px', maxHeight: '200px' }} // Set your preferred min/max heights
+            style={{ height: '40px', minHeight: '40px', maxHeight: '300px' }} // Set your preferred min/max heights
           />
         </div>
 
