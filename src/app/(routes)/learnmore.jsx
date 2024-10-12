@@ -1,6 +1,6 @@
 import React from 'react';
 
-const learnmore = () => {
+const LearnMore = () => {
     return (
         <div style={styles.container}>
             {/* Header */}
@@ -41,14 +41,15 @@ const styles = {
         fontFamily: 'Arial, sans-serif',
         margin: 0,
         padding: 0,
-        backgroundColor: '#f4f4f4',
+        backgroundColor: '#1e273b',  // Darker background
         minHeight: '100vh',
         display: 'flex',
         flexDirection: 'column',
+        color: '#e0e0e0', // Light gray text
     },
     header: {
-        backgroundColor: '#333',
-        color: 'white',
+        backgroundColor: '#004d40', // Darker teal header
+        color: '#e0e0e0', // Light gray text
         padding: '15px 0',
         textAlign: 'center',
     },
@@ -60,32 +61,32 @@ const styles = {
         padding: '20px',
         maxWidth: '800px',
         margin: '40px auto',
-        backgroundColor: 'white',
-        boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+        backgroundColor: '#2b2b2b', // Darker gray background for content
+        boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
         flex: 1,
     },
     heading: {
-        color: '#333',
+        color: '#909ec6', // Light color for headings
         fontSize: '2em',
         marginBottom: '20px',
     },
     paragraph: {
         lineHeight: 1.6,
         fontSize: '1.2em',
-        color: '#666',
+        color: '#e0e0e0',  // Light gray for text
         marginBottom: '20px',
     },
     link: {
-        color: '#007BFF',
+        color: '#3262ca', // Color for links
         textDecoration: 'none',
         fontWeight: 'bold',
     },
     footer: {
         textAlign: 'center',
         padding: '20px',
-        backgroundColor: '#333',
-        color: 'white',
+        backgroundColor: '#004d40', // Darker teal footer
+        color: '#e0e0e0', // Light gray text
     },
 };
 
-export default learnmore;
+export default LearnMore;
