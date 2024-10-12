@@ -1,52 +1,40 @@
-export default {
-  async fetch(request, env) {
+// Define an event listener for incoming fetch events
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
+
+// Main function to handle incoming requests
+async function handleRequest(request) {
+  // Check if the request method is POST
+  if (request.method === 'POST') {
     try {
-      let query;
+      // Parse JSON data from the request body
+      const formData = await request.json();
 
-      // Handle POST request with JSON body
-      if (request.method === "POST") {
-        if (request.headers.get("content-type")?.includes("application/json")) {
-          const body = await request.json();
-          query = body.query;
-        } else {
-          return new Response(
-            JSON.stringify({ error: "Invalid request. JSON body required." }),
-            { status: 400, headers: { "Content-Type": "application/json" } }
-          );
-        }
-      }
+      // Sanitize input data
+      const sanitizedData = sanitizeInput(formData);
 
-      // Handle GET request for testing
-      if (request.method === "GET") {
-        // Use a default query if none provided
-        query = "hackathon";
-      }
-
-      // If no query was extracted, return an error
-      if (!query) {
-        return new Response(
-          JSON.stringify({ error: "No query provided." }),
-          { status: 400, headers: { "Content-Type": "application/json" } }
-        );
-      }
-
-      // GitHub API call
-      const response = await fetch(`https://api.github.com/search/repositories?q=${query}&sort=stars`, {
-        headers: {
-          Authorization: `Bearer ${env.GITHUB_ACCESS_TOKEN}`,
-        },
-      });
-
-      const githubData = await response.json();
-
-      return new Response(JSON.stringify(githubData), {
-        headers: { "Content-Type": "application/json" },
+      // Process the sanitized data (e.g., save it, return a response, etc.)
+      return new Response(JSON.stringify({ success: true, data: sanitizedData }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
       });
     } catch (error) {
-      return new Response(
-        JSON.stringify({ error: "Failed to process request", details: error.message }),
-        { status: 500, headers: { "Content-Type": "application/json" } }
-      );
+      // Handle JSON parsing errors or other issues
+      return new Response(JSON.stringify({ success: false, error: error.message }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' },
+      });
     }
-  },
-};
+  } else {
+    // Handle non-POST requests (e.g., return an error or a different response)
+    return new Response('Method not allowed', { status: 405 });
+  }
+}
+
+// Function to sanitize input data
+function sanitizeInput(data) {
+  // Implement your sanitization logic here
+  // This is just a placeholder; you'll need to customize it for your use case
+  return data; // Return sanitized data
+}

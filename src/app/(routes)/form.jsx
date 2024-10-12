@@ -72,9 +72,11 @@ const Form = () => {
     setPreferredTools(newTools);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log({
+  
+    // Create an object with the form data
+    const formData = {
       numTeammates,
       skillLevels,
       hackathonLength,
@@ -82,8 +84,30 @@ const Form = () => {
       sponsorChallenges,
       preferredTools,
       specialRequirements,
-    });
+    };
+  
+    try {
+      const response = await fetch('https://hackrmap-worker.jcwins8211.workers.dev/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+  
+      // Handle the response from the worker
+      if (response.ok) {
+        const data = await response.json();
+        console.log('Success:', data);
+        // You can also display the results or handle them as needed
+      } else {
+        console.error('Error:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Fetch error:', error);
+    }
   };
+  
 
   return (
     <div className="flex flex-col items-center justify-start bg-gray-100 min-h-screen p-6">
