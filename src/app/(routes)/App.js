@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'; 
 import Form from './form'; 
 import Dashboard from './dashboard';
+import Learnmore from './learnmore';
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
         
         <Route path="/form" element={<Form />} />
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/learnmore" element={<Learnmore />} />
       </Routes>
     </Router>
   );
