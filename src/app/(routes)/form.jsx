@@ -4,7 +4,7 @@ const Form = () => {
   const [numTeammates, setNumTeammates] = useState(1);
   const [skillLevels, setSkillLevels] = useState(['']);
   const [hackathonLength, setHackathonLength] = useState('');
-  const [track, setTrack] = useState('');
+  const [tracks, setTracks] = useState([{ name: '', description: '' }]); // State to manage tracks
   const [sponsorChallenge, setSponsorChallenge] = useState('');
   const [tools, setTools] = useState({ backend: false, frontend: false, database: false });
   const [specialRequirements, setSpecialRequirements] = useState('');
@@ -30,6 +30,16 @@ const Form = () => {
     setSkillLevels(newSkillLevels);
   };
 
+  const handleTrackChange = (index, field, value) => {
+    const newTracks = [...tracks];
+    newTracks[index][field] = value; // Update the specific track input
+    setTracks(newTracks);
+  };
+
+  const handleAddTrack = () => {
+    setTracks([...tracks, { name: '', description: '' }]); // Add a new blank track input field
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     // Handle form submission logic here
@@ -37,7 +47,7 @@ const Form = () => {
       numTeammates,
       skillLevels,
       hackathonLength,
-      track,
+      tracks,
       sponsorChallenge,
       tools,
       specialRequirements,
@@ -97,30 +107,33 @@ const Form = () => {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="track" className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-gray-700">
             Tracks (required):
           </label>
-          <select
-            id="track"
-            value={track}
-            onChange={(e) => setTrack(e.target.value)}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-            required
+          {tracks.map((track, index) => (
+            <div key={index} className="space-y-2 mt-2">
+              <input
+                type="text"
+                value={track.name}
+                onChange={(e) => handleTrackChange(index, 'name', e.target.value)}
+                placeholder={`Track Name ${index + 1}`}
+                className="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
+              />
+              <textarea
+                value={track.description}
+                onChange={(e) => handleTrackChange(index, 'description', e.target.value)}
+                placeholder={`Track Description ${index + 1}`}
+                className="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
+              />
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={handleAddTrack}
+            className="mt-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
           >
-            <option value="" disabled>Select Track</option>
-            <option value="web">Web Development</option>
-            <option value="mobile">Mobile Development</option>
-            <option value="data">Data Science</option>
-            <option value="other">Other</option>
-          </select>
-          {track === 'other' && (
-            <input
-              type="text"
-              placeholder="Specify other track"
-              className="mt-2 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-              onChange={(e) => setTrack(e.target.value)}
-            />
-          )}
+            Add Track
+          </button>
         </div>
 
         <div className="mb-4">
