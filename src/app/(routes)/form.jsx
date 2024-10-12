@@ -14,7 +14,6 @@ const Form = () => {
     setSkillLevels(updatedSkillLevels);
   }, [numTeammates]);
 
-  // Function to handle numeric input changes and restrict direct input
   const handleNumberInput = (setValue, min, max) => (e) => {
     const value = Number(e.target.value);
     if (e.target.value === '' || (value >= min && value <= max)) {
@@ -38,6 +37,11 @@ const Form = () => {
     setTracks(newTracks);
   };
 
+  const handleRemoveTrack = (index) => {
+    const newTracks = tracks.filter((_, i) => i !== index);
+    setTracks(newTracks);
+  };
+
   const handleAddSponsorChallenge = () => {
     setSponsorChallenges([...sponsorChallenges, { name: '', description: '' }]);
   };
@@ -48,6 +52,11 @@ const Form = () => {
     setSponsorChallenges(newChallenges);
   };
 
+  const handleRemoveSponsorChallenge = (index) => {
+    const newChallenges = sponsorChallenges.filter((_, i) => i !== index);
+    setSponsorChallenges(newChallenges);
+  };
+
   const handleAddTool = () => {
     setPreferredTools([...preferredTools, { name: '', description: '' }]);
   };
@@ -55,6 +64,11 @@ const Form = () => {
   const handleToolChange = (index, field, value) => {
     const newTools = [...preferredTools];
     newTools[index][field] = value;
+    setPreferredTools(newTools);
+  };
+
+  const handleRemoveTool = (index) => {
+    const newTools = preferredTools.filter((_, i) => i !== index);
     setPreferredTools(newTools);
   };
 
@@ -83,7 +97,7 @@ const Form = () => {
             type="number"
             id="numTeammates"
             value={numTeammates}
-            onChange={handleNumberInput(setNumTeammates, 1, 8)} // Use the new function here
+            onChange={handleNumberInput(setNumTeammates, 1, 8)}
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             required
             min="1"
@@ -121,7 +135,7 @@ const Form = () => {
             type="number"
             id="hackathonLength"
             value={hackathonLength}
-            onChange={handleNumberInput(setHackathonLength, 1, 168)} // Use the new function here
+            onChange={handleNumberInput(setHackathonLength, 1, 168)}
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             required
             min="1"
@@ -151,9 +165,17 @@ const Form = () => {
                 required
                 style={{ height: '40px', minHeight: '40px', maxHeight: '300px' }} // Keep the existing min/max heights
               />
+              <button
+                type="button"
+                onClick={() => handleRemoveTrack(index)}
+                className="mt-1 bg-red-600 text-white py-1 px-2 rounded-md hover:bg-red-700 mx-2"
+                style={{ height: '40px', width: '60px' }}
+              >
+                -
+              </button>
             </div>
           ))}
-          <button type="button" onClick={handleAddTrack} className="mt-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+          <button type="button" onClick={handleAddTrack} className="mt-1 mb-2  bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
             Add Track
           </button>
         </div>
@@ -180,38 +202,54 @@ const Form = () => {
                 required
                 style={{ height: '40px', minHeight: '40px', maxHeight: '300px' }} // Set your preferred min/max heights
               />
+              <button
+                type="button"
+                onClick={() => handleRemoveSponsorChallenge(index)}
+                className="mt-1 bg-red-600 text-white py-1 px-2 rounded-md hover:bg-red-700 mx-2"
+                style={{ height: '40px', width: '60px' }}
+              >
+                -
+              </button>
             </div>
           ))}
-          <button type="button" onClick={handleAddSponsorChallenge} className="mt-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+          <button type="button" onClick={handleAddSponsorChallenge} className="mt-1 mb-2  bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
             Add Sponsor Challenge
           </button>
         </div>
 
         {/* Preferred Tools Input */}
         <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Preferred Tools/Technologies:</label>
+          <label className="block text-sm font-medium text-gray-700">Preferred Tools:</label>
           {preferredTools.map((tool, index) => (
             <div key={index} className="flex mb-2">
               <input
                 type="text"
-                placeholder="Tool/Technology Name"
+                placeholder="Tool Name"
                 value={tool.name}
                 onChange={(e) => handleToolChange(index, 'name', e.target.value)}
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mr-2"
                 required
-                style={{ height: '40px' }} // Set the fixed height for track name
+                style={{ height: '40px' }}
               />
               <textarea
-                placeholder="Tool/Technology Description"
+                placeholder="Tool Description"
                 value={tool.description}
                 onChange={(e) => handleToolChange(index, 'description', e.target.value)}
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 resize-y"
                 required
                 style={{ height: '40px', minHeight: '40px', maxHeight: '300px' }} // Set your preferred min/max heights
               />
+              <button
+                type="button"
+                onClick={() => handleRemoveTool(index)}
+                className="mt-1 bg-red-600 text-white py-1 px-2 rounded-md hover:bg-red-700 mx-2"
+                style={{ height: '40px', width: '60px' }}
+              >
+                -
+              </button>
             </div>
           ))}
-          <button type="button" onClick={handleAddTool} className="mt-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+          <button type="button" onClick={handleAddTool} className="mt-1 mb-2  bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
             Add Preferred Tool
           </button>
         </div>
