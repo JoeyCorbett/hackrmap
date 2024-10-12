@@ -28,6 +28,7 @@ const Form = () => {
   };
 
   return (
+    <div className="py-40 bg-cover bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 ">
     <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md max-w-lg mx-auto">
       <div className="mb-4">
         <label htmlFor="numTeammates" className="block text-sm font-medium text-gray-700">
@@ -177,6 +178,7 @@ const Form = () => {
         Submit
       </button>
     </form>
+    </div>
   );
 };
 
