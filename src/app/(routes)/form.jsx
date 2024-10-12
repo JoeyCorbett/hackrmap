@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 // Function to submit form data to the backend
 const submitForm = async (formData) => {
@@ -29,6 +30,8 @@ const MyForm = () => {
     const [loading, setLoading] = useState(false);
     const [responseMessage, setResponseMessage] = useState('');
 
+    const navigate = useNavigate();
+
     const resetForm = () => {
         // Reset all the form fields to their initial state
         setNumTeammates(1);
@@ -39,6 +42,7 @@ const MyForm = () => {
         setPreferredTools([{ name: '', description: '' }]);
         setSpecialRequirements('');
     };
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -68,10 +72,10 @@ const MyForm = () => {
 
             // Handle the response from the backend
             if (response) {
-                setResponseMessage('Success! Roadmap generated.'); // Update with success message
+                setResponseMessage('Success! Roadmap generated.'); 
                 resetForm();
             } else {
-                setResponseMessage('Error generating roadmap'); // Update with error message
+                setResponseMessage('Error generating roadmap'); 
             }
         } catch (error) {
             setResponseMessage('Error submitting form: ' + error.message); // Handle fetch error
