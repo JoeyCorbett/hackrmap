@@ -50,6 +50,7 @@ const LearnMore = () => {
                 </p>
             </footer>
         </div>
+    </div>
     );
 };
 
