@@ -16,8 +16,7 @@ import CustomNode from './customNode'; // Import CustomNode directly
 import SidePanel from './sidePanel';
 
 const rfStyle = {
-  backgroundColor: '#fafafa',
-  border: '1px solid #e0e0e0',
+  backgroundColor: '#111827'
 };
 
 const Map = () => {
@@ -39,7 +38,6 @@ const Map = () => {
   );
 
   const onNodeClick = useCallback((event, node) => {
-    console.log('Node clicked:', node);
     setActiveNode(node);
   }, []);
 
@@ -48,14 +46,9 @@ const Map = () => {
   };
 
   return (
-    <div className="flex-1 flex flex-col">
-
-      <main className="flex-1 p-6 relative"> {/* Added relative positioning */}
-        <div className=" p-6 rounded-lg shadow-lg" style={{ height: '600px' }}>
-          <h2 className="text-4xl font-bold text-white mb-4">Visual Roadmap with Sub-Flows</h2>
+      <main className="h-screen w-screen"> {/* Added relative positioning */}
           {/* {nodes.length === 0 && <Loading />}  */}
           {/* Added loading animation when nodes are empty */}
-
           <ReactFlow
             nodes={nodes}
             edges={edges}
@@ -70,14 +63,12 @@ const Map = () => {
             <Background />
             <Controls />
           </ReactFlow>
-        </div>
         {activeNode && (
           <div className="">
             <SidePanel node={activeNode} onClose={closePanel} />
           </div>
         )}
       </main>
-    </div>
   );
 };
 

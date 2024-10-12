@@ -27,19 +27,10 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
-    
-        <h1 className="p-6 pb-2 text-white text-4xl font-bold bg-gray-900">Generate Your Project Roadmap</h1>
-        
-    
-    <div className="flex h-screen bg-gray-900 p-5">
-        
-      {/* Sidebar */}
+    <main className="flex flex-row">
       <NavBar />
-
       <Map />
-    </div>
-    </div>
+    </main>
   );
 };
 
