@@ -1,92 +1,54 @@
 import React from 'react';
+import { Github, Rocket } from 'lucide-react';
 
 const LearnMore = () => {
     return (
-        <div style={styles.container}>
-            {/* Header */}
-            <header style={styles.header}>
-                <h1 style={styles.title}>Learn More</h1>
-            </header>
+        <div className="flex flex-col min-h-screen bg-gray-900 text-white font-sans">
+            <main className = "flex-1 p-10 max-w-4xl mx-auto bg-[#1e273b] shadow-2xl rounded-3xl mt-10">
+                {/* New Learn More Section */}
+                <h1 className='text-5xl text-[#dbdde2] mb-8 font-bold '>Learn More</h1>
+                <h2 className="text-4xl text-[#a3b2d9] mb-3 font-bold">Project Roadmap Generator</h2>
+                <p className="text-xl mb-3">
+                    Our platform is designed specifically for hackathon participants looking to streamline their project development process. By entering key information such as:
+                </p>
+                <ul className="list-disc list-inside mb-3 text-base">
+                    <li><strong>Team Size:</strong> Specify how many members are in your team.</li>
+                    <li><strong>Individual Skill Levels:</strong> Provide insights into the expertise of each team member.</li>
+                    <li><strong>Hackathon Length:</strong> Indicate the duration of the event.</li>
+                    <li><strong>Tracks:</strong> Select the focus area or themes of the hackathon.</li>
+                </ul>
 
-            {/* Main Content */}
-            <main style={styles.content}>
-                <h2 style={styles.heading}>About Our Hackathon Project</h2>
-                <p style={styles.paragraph}>
-                    Welcome to our project! We participated in this hackathon to create something innovative and helpful.
-                    On this page, you'll find more details about how our project works, the technology behind it, and what we
-                    aim to achieve. We're excited to share what we’ve built and hope you find it inspiring!
+                <p className="text-xl mb-8">
+                    We leverage an advanced AI model to analyze this data and generate a comprehensive project roadmap tailored to your needs.
                 </p>
-                <p style={styles.paragraph}>
-                    Our project leverages various tools and technologies, including <a href="#" style={styles.link}>GitHub API</a> and <a href="#" style={styles.link}>OpenAI API</a>,
-                    to generate personalized roadmaps for hackathon projects. Feel free to explore the code and learn more 
-                    about how we’ve structured the app.
+
+                <h4 className="text-3xl text-[#a3b2d9] mb-3 font-bold">What’s Included in Your Roadmap?</h4>
+                <ul className="list-disc list-inside mb-3 text-base">
+                    <li><strong>Project Ideas:</strong> Discover innovative project concepts that align with your team's strengths.</li>
+                    <li><strong>Step-by-Step Guidance:</strong> Get a detailed plan outlining the steps necessary to complete your project successfully.</li>
+                    <li><strong>Learning Resources:</strong> Access curated resources to help you acquire the skills needed for each step.</li>
+                    <li><strong>Assigned Roles:</strong> Receive role assignments based on individual skill levels, ensuring that every team member contributes effectively.</li>
+                </ul>
+
+                <p className="text-xl mb-8">
+                    With our tool, you can focus on what truly matters—building a remarkable project that stands out during the hackathon!
                 </p>
-                <p style={styles.paragraph}>
-                    Interested in the technical details? Check out our GitHub repository for more insights into our codebase and
-                    implementation strategy.
-                </p>
+
+                <div className="flex justify-center mt-10">
+                    <a href="#" className="flex items-center bg-[#4b8748] text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-[#30572e] transition duration-300">
+                        <Github className="mr-2" /> View on GitHub
+                    </a>
+                </div>
             </main>
 
             {/* Footer */}
-            <footer style={styles.footer}>
-                <p>© 2024 Hackathon Project - Team Name</p>
+            <footer className="bg-black bg-opacity-50 text-white py-6 text-center mt-10 shadow-lg">
+                <p className="flex items-center justify-center">
+                    <Rocket className="mr-2" /> © 2024 Hackathon Project - Team Name
+                </p>
             </footer>
         </div>
     );
-};
-
-// Inline CSS styles for JSX
-const styles = {
-    container: {
-        fontFamily: 'Arial, sans-serif',
-        margin: 0,
-        padding: 0,
-        backgroundColor: '#1e273b',  // Darker background
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        color: '#e0e0e0', // Light gray text
-    },
-    header: {
-        backgroundColor: '#004d40', // Darker teal header
-        color: '#e0e0e0', // Light gray text
-        padding: '15px 0',
-        textAlign: 'center',
-    },
-    title: {
-        margin: 0,
-        fontSize: '2.5em',
-    },
-    content: {
-        padding: '20px',
-        maxWidth: '800px',
-        margin: '40px auto',
-        backgroundColor: '#2b2b2b', // Darker gray background for content
-        boxShadow: '0 0 10px rgba(0, 0, 0, 0.5)',
-        flex: 1,
-    },
-    heading: {
-        color: '#909ec6', // Light color for headings
-        fontSize: '2em',
-        marginBottom: '20px',
-    },
-    paragraph: {
-        lineHeight: 1.6,
-        fontSize: '1.2em',
-        color: '#e0e0e0',  // Light gray for text
-        marginBottom: '20px',
-    },
-    link: {
-        color: '#3262ca', // Color for links
-        textDecoration: 'none',
-        fontWeight: 'bold',
-    },
-    footer: {
-        textAlign: 'center',
-        padding: '20px',
-        backgroundColor: '#004d40', // Darker teal footer
-        color: '#e0e0e0', // Light gray text
-    },
 };
 
 export default LearnMore;
