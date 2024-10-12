@@ -27,14 +27,10 @@ const Dashboard = () => {
   };
 
   return (
-
-    <div className="flex h-screen bg-gray-900 p-5">
-        
-      {/* Sidebar */}
+    <main className="flex flex-row">
       <NavBar />
-
       <Map />
-    </div>
+    </main>
   );
 };
 

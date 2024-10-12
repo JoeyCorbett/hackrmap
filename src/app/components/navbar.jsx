@@ -1,23 +1,24 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom"; // Only import Link
-import { Menu, X } from "lucide-react";
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
-const NavBar = () => {
+const Navbar = () => {
   const [isNavBarOpen, setIsNavBarOpen] = useState(false);
+
   const handleToggleNavbar = () => {
     setIsNavBarOpen(!isNavBarOpen);
   };
 
   return (
-    <div className="flex">
-    {!isNavBarOpen && (
-        <button onClick={handleToggleNavbar}>
-          <Menu color="#ffffff"/>
-        </button>
-    )}
-   
+    <div>
+      <button
+        onClick={handleToggleNavbar}
+        className={`absolute top-4 left-4 w-10 h-10 bg-transparent p-2 rounded-lg text-white text-lg z-10 border border-white flex items-center justify-center ${isNavBarOpen ? 'hidden' : ''}`}
+      >
+        ☰
+      </button>
+
       {isNavBarOpen && (
-        <div className="flex h-screen bg-gray-100">
+        <div className="flex h-screen bg-red-100">
           {/* Sidebar */}
           <aside className="w-64 bg-gray-800 text-gray-200 flex flex-col">
             <div className="flex flex-row bg-gray-900 justify-between pr-3 pt-3">
@@ -26,9 +27,9 @@ const NavBar = () => {
               </div>
               <button
                 onClick={handleToggleNavbar}
-                className=""
+                className="text-white text-2xl"
               >
-                <X color="#ffffff" />
+                X
               </button>
             </div>
 
@@ -46,16 +47,16 @@ const NavBar = () => {
                 Manage Projects
               </Link>
               <Link
-                to="/learnmore"
-                className="block py-2 px-4 rounded hover:bg-gray-700"
-              >
-                Learn more
-              </Link>
-              <Link
                 to="/form"
                 className="block py-2 px-4 rounded hover:bg-gray-700"
               >
                 Back to Form
+              </Link>
+              <Link
+                to="/LearnMore"
+                className="block py-2 px-4 rounded hover:bg-gray-700"
+              >
+                Learn More
               </Link>
             </nav>
           </aside>
@@ -65,4 +66,4 @@ const NavBar = () => {
   );
 };
 
-export default NavBar;
+export default Navbar;

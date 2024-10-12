@@ -50,6 +50,10 @@ const MyForm = () => {
         setSpecialRequirements('');
     };
 
+    const handleRemove = (index, setState, state) => {
+        const newState = state.filter((_, i) => i !== index);
+        setState(newState);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -91,7 +95,7 @@ const MyForm = () => {
     };
 
     return (
-      <div className="flex flex-col items-center justify-start bg-gray-900 min-h-screen p-6">
+      <div className="flex flex-col items-center justify-start bg-gray-900 min-h-screen p-6 text-base">
         <form onSubmit={handleSubmit} className="bg-[#1e273b] p-6 rounded-lg shadow-md max-w-lg w-full">
             {/* Number of Teammates Input */}
             <div className="mb-4">
@@ -144,7 +148,7 @@ const MyForm = () => {
             ))}
 
             {/* Hackathon Length Input */}
-<           div className="mb-4">
+            <div className="mb-4">
                 <label htmlFor="hackathonLength" className="block text-sm font-medium text-[#b3c0e3]">
                     Hackathon Length (in hours):
                 </label>
@@ -195,6 +199,13 @@ const MyForm = () => {
                             }}
                             className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ml-2"
                         />
+                        <button
+                            type="button"
+                            onClick={() => handleRemove(index, setTracks, tracks)}
+                            className="text-gray-200 border border-black rounded-md p-1 bg-red-600 ml-2 mt-1"
+                        >
+                            Remove
+                        </button>
                     </div>
                 ))}
                 <button
@@ -233,6 +244,13 @@ const MyForm = () => {
                             }}
                             className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ml-2"
                         />
+                        <button
+                            type="button"
+                            onClick={() => handleRemove(index, setSponsorChallenges, sponsorChallenges)}
+                            className="text-gray-200 border border-black rounded-md p-1 bg-red-600 ml-2 mt-1"
+                        >
+                            Remove
+                        </button>
                     </div>
                 ))}
                 <button
@@ -271,6 +289,13 @@ const MyForm = () => {
                             }}
                             className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ml-2"
                         />
+                        <button
+                            type="button"
+                            onClick={() => handleRemove(index, setPreferredTools, preferredTools)}
+                            className="text-gray-200 border border-black rounded-md p-1 bg-red-600 ml-2 mt-1"
+                        >
+                            Remove
+                        </button>
                     </div>
                 ))}
                 <button
