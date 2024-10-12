@@ -117,33 +117,33 @@ const Form = () => {
         </div>
 
         {/* Tracks Input */}
-<div className="mb-4">
-  <label className="block text-sm font-medium text-gray-700">Tracks (required):</label>
-  {tracks.map((track, index) => (
-    <div key={index} className="flex mb-2">
-      <input
-        type="text"
-        placeholder="Track Name"
-        value={track.name}
-        onChange={(e) => handleTrackChange(index, 'name', e.target.value)}
-        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mr-2"
-        required
-        style={{ height: '40px' }} // Set the fixed height for track name
-      />
-      <textarea
-        placeholder="Track Description"
-        value={track.description}
-        onChange={(e) => handleTrackChange(index, 'description', e.target.value)}
-        className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 resize-y"
-        required
-        style={{ height: '40px', minHeight: '40px', maxHeight: '300px' }} // Keep the existing min/max heights
-      />
-    </div>
-  ))}
-  <button type="button" onClick={handleAddTrack} className="mt-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
-    Add Track
-  </button>
-</div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-700">Tracks (required):</label>
+          {tracks.map((track, index) => (
+            <div key={index} className="flex mb-2">
+              <input
+                type="text"
+                placeholder="Track Name"
+                value={track.name}
+                onChange={(e) => handleTrackChange(index, 'name', e.target.value)}
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mr-2"
+                required
+                style={{ height: '40px' }} // Set the fixed height for track name
+              />
+              <textarea
+                placeholder="Track Description"
+                value={track.description}
+                onChange={(e) => handleTrackChange(index, 'description', e.target.value)}
+                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 resize-y"
+                required
+                style={{ height: '40px', minHeight: '40px', maxHeight: '300px' }} // Keep the existing min/max heights
+              />
+            </div>
+          ))}
+          <button type="button" onClick={handleAddTrack} className="mt-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
+            Add Track
+          </button>
+        </div>
 
 
         {/* Sponsor Challenges Input */}
