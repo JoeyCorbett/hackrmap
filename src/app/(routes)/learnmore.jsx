@@ -43,10 +43,9 @@ const LearnMore = () => {
                 </div>
             </main>
 
-            {/* Pie de Página */}
             <footer className="bg-black bg-opacity-50 text-white py-6 text-center mt-10 shadow-lg">
                 <p className="flex items-center justify-center">
-                    <Rocket className="mr-2" /> © 2024 Hackathon Project - Team Name
+                    <Rocket className="mr-2" /> © 2024 HackrMap
                 </p>
             </footer>
         </div>
