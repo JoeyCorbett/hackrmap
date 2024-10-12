@@ -81,6 +81,7 @@ const MyForm = () => {
     };
 
     return (
+      <div className="flex flex-col items-center justify-start bg-gray-100 min-h-screen p-6">
         <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md max-w-lg w-full">
             {/* Number of Teammates Input */}
             <div className="mb-4">
@@ -284,6 +285,7 @@ const MyForm = () => {
                 {loading ? 'Generating...' : 'Generate Roadmap'}
             </button>
         </form>
+      </div>
     );
 };
 
