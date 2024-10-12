@@ -81,11 +81,11 @@ const MyForm = () => {
     };
 
     return (
-      <div className="flex flex-col items-center justify-start bg-gray-100 min-h-screen p-6">
-        <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md max-w-lg w-full">
+      <div className="flex flex-col items-center justify-start bg-gray-900 min-h-screen p-6">
+        <form onSubmit={handleSubmit} className="bg-[#1e273b] p-6 rounded-lg shadow-md max-w-lg w-full">
             {/* Number of Teammates Input */}
             <div className="mb-4">
-                <label htmlFor="numTeammates" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="numTeammates" className="block text-sm font-medium text-[#909ec6]">
                     Number of Teammates (required):
                 </label>
                 <input
@@ -93,7 +93,7 @@ const MyForm = () => {
                     id="numTeammates"
                     value={numTeammates}
                     onChange={(e) => setNumTeammates(Math.max(1, Math.min(8, e.target.value)))}
-                    className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                     required
                     min="1"
                     max="8"
@@ -103,7 +103,7 @@ const MyForm = () => {
             {/* Skill Levels Input */}
             {Array.from({ length: numTeammates }).map((_, index) => (
                 <div className="mb-4" key={index}>
-                    <label htmlFor={`skillLevel-${index}`} className="block text-sm font-medium text-gray-700">
+                    <label htmlFor={`skillLevel-${index}`} className="block text-sm font-medium text-[#909ec6]">
                         Skill Level for Teammate {index + 1} (required):
                     </label>
                     <select
@@ -114,7 +114,7 @@ const MyForm = () => {
                             newSkillLevels[index] = e.target.value;
                             setSkillLevels(newSkillLevels);
                         }}
-                        className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         required
                     >
                         <option value="">Select Skill Level</option>
@@ -127,7 +127,7 @@ const MyForm = () => {
 
             {/* Hackathon Length Input */}
             <div className="mb-4">
-                <label htmlFor="hackathonLength" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="hackathonLength" className="block text-sm font-medium text-[#909ec6]">
                     Hackathon Length (in hours):
                 </label>
                 <input
@@ -135,7 +135,7 @@ const MyForm = () => {
                     id="hackathonLength"
                     value={hackathonLength}
                     onChange={(e) => setHackathonLength(Math.max(1, e.target.value))}
-                    className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                     required
                     min="1"
                 />
@@ -143,7 +143,7 @@ const MyForm = () => {
 
             {/* Tracks Input */}
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Tracks (optional):</label>
+                <label className="block text-sm font-medium text-[#909ec6]">Tracks (optional):</label>
                 {tracks.map((track, index) => (
                     <div key={index} className="flex mb-2">
                         <input
@@ -155,7 +155,7 @@ const MyForm = () => {
                                 newTracks[index].name = e.target.value;
                                 setTracks(newTracks);
                             }}
-                            className="mt-1 p-2 block w-1/2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         />
                         <input
                             type="text"
@@ -166,14 +166,14 @@ const MyForm = () => {
                                 newTracks[index].description = e.target.value;
                                 setTracks(newTracks);
                             }}
-                            className="mt-1 p-2 block w-1/2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ml-2"
+                            className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ml-2"
                         />
                     </div>
                 ))}
                 <button
                     type="button"
                     onClick={() => setTracks([...tracks, { name: '', description: '' }])}
-                    className="text-blue-600"
+                    className="text-gray-200 border border-black rounded-md p-1 bg-[#3262ca]"
                 >
                     Add Track
                 </button>
@@ -181,7 +181,7 @@ const MyForm = () => {
 
             {/* Sponsor Challenges Input */}
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Sponsor Challenges (optional):</label>
+                <label className="block text-sm font-medium text-[#909ec6]">Sponsor Challenges (optional):</label>
                 {sponsorChallenges.map((challenge, index) => (
                     <div key={index} className="flex mb-2">
                         <input
@@ -193,7 +193,7 @@ const MyForm = () => {
                                 newChallenges[index].name = e.target.value;
                                 setSponsorChallenges(newChallenges);
                             }}
-                            className="mt-1 p-2 block w-1/2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         />
                         <input
                             type="text"
@@ -204,14 +204,14 @@ const MyForm = () => {
                                 newChallenges[index].description = e.target.value;
                                 setSponsorChallenges(newChallenges);
                             }}
-                            className="mt-1 p-2 block w-1/2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ml-2"
+                            className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ml-2"
                         />
                     </div>
                 ))}
                 <button
                     type="button"
                     onClick={() => setSponsorChallenges([...sponsorChallenges, { name: '', description: '' }])}
-                    className="text-blue-600"
+                    className="text-gray-200 border border-black rounded-md p-1 bg-[#3262ca]"
                 >
                     Add Challenge
                 </button>
@@ -219,7 +219,7 @@ const MyForm = () => {
 
             {/* Preferred Tools Input */}
             <div className="mb-4">
-                <label className="block text-sm font-medium text-gray-700">Preferred Tools (optional):</label>
+                <label className="block text-sm font-medium text-[#909ec6]">Preferred Tools (optional):</label>
                 {preferredTools.map((tool, index) => (
                     <div key={index} className="flex mb-2">
                         <input
@@ -231,7 +231,7 @@ const MyForm = () => {
                                 newTools[index].name = e.target.value;
                                 setPreferredTools(newTools);
                             }}
-                            className="mt-1 p-2 block w-1/2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                            className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                         />
                         <input
                             type="text"
@@ -242,14 +242,14 @@ const MyForm = () => {
                                 newTools[index].description = e.target.value;
                                 setPreferredTools(newTools);
                             }}
-                            className="mt-1 p-2 block w-1/2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ml-2"
+                            className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ml-2"
                         />
                     </div>
                 ))}
                 <button
                     type="button"
                     onClick={() => setPreferredTools([...preferredTools, { name: '', description: '' }])}
-                    className="text-blue-600"
+                    className="text-gray-200 border border-black rounded-md p-1 bg-[#3262ca]"
                 >
                     Add Tool
                 </button>
@@ -257,7 +257,7 @@ const MyForm = () => {
 
             {/* Special Requirements Input */}
             <div className="mb-4">
-                <label htmlFor="specialRequirements" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="specialRequirements" className="block text-sm font-medium text-[#909ec6]">
                     Special Requirements (optional):
                 </label>
                 <textarea
@@ -265,7 +265,7 @@ const MyForm = () => {
                     value={specialRequirements}
                     onChange={(e) => setSpecialRequirements(e.target.value)}
                     rows="3"
-                    className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                 />
             </div>
 
@@ -279,7 +279,7 @@ const MyForm = () => {
             {/* Submit Button */}
             <button
                 type="submit"
-                className={`w-full bg-blue-600 text-white p-2 rounded-md shadow-md ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`w-full bg-[#4b8748] text-white p-2 rounded-md shadow-md ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                 disabled={loading}
             >
                 {loading ? 'Generating...' : 'Generate Roadmap'}
