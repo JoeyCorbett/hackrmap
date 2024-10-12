@@ -11,22 +11,34 @@ const Form = () => {
 
   const handleNumTeammatesChange = (e) => {
     const value = Number(e.target.value);
+    if (value > 10) {
+      return;
+    }
     setNumTeammates(value);
-
+  
+    // Update skill levels array based on the number of teammates
     const newSkillLevels = [...skillLevels];
     while (newSkillLevels.length < value) {
-      newSkillLevels.push('');
+      newSkillLevels.push(''); // Add empty skill levels for new teammates
     }
     while (newSkillLevels.length > value) {
-      newSkillLevels.pop();
+      newSkillLevels.pop(); // Remove skill levels for teammates that are no longer needed
     }
     setSkillLevels(newSkillLevels);
   };
+  
 
   const handleSkillLevelChange = (index, value) => {
     const newSkillLevels = [...skillLevels];
     newSkillLevels[index] = value;
     setSkillLevels(newSkillLevels);
+  };
+
+  const handleHackathonLengthChange = (e) => {
+    const value = Number(e.target.value);
+    if (value >= 1 && value <= 168) {
+      setHackathonLength(value);
+    }
   };
 
   const handleTrackChange = (index, field, value) => {
@@ -77,6 +89,7 @@ const Form = () => {
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             required
             min="1"
+            max="10"
           />
         </div>
 
@@ -108,10 +121,11 @@ const Form = () => {
             type="number"
             id="hackathonLength"
             value={hackathonLength}
-            onChange={(e) => setHackathonLength(e.target.value)}
+            onChange={handleHackathonLengthChange}
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             required
             min="1"
+            max="168"
           />
         </div>
 
