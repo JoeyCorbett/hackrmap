@@ -331,7 +331,7 @@ const MyForm = () => {
             {/* Submit Button */}
             <button
                 type="submit"
-                className={`w-full bg-[#4b8748] text-white p-2 rounded-md shadow-md ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                className={`w-full bg-[#4b8748] text-white p-2 rounded-md shadow-md ${loading ? 'opacity-50 cursor-not-allowed' : ''} hover:bg-[#3a6b38]`}
                 disabled={loading}
             >
                 {loading ? 'Generating...' : 'Generate Roadmap'}
