@@ -1,78 +1,41 @@
 import React, { useState, useCallback } from 'react';
 import { generateRoadmap } from '../../services/openAiService'; // Correct import
-
-// ReactFlow imports
-import {
-  ReactFlow,
-  Controls,
-  Background,
-  applyNodeChanges,
-  applyEdgeChanges,
-  addEdge,
-} from '@xyflow/react';
-import '@xyflow/react/dist/style.css';
-
-// Initial nodes and edges for ReactFlow
-const initialNodes = [
-  {
-    id: '1',
-    data: { label: 'Start of Roadmap' },
-    position: { x: 0, y: 0 },
-    type: 'input',
-  },
-];
-
-const initialEdges = [];
+import Map from '../components/map';
 
 const Dashboard = () => {
+//   const nodeTypes = { textUpdater: TextUpdaterNode };
+
   const [roadmap, setRoadmap] = useState(''); // For the generated roadmap from OpenAI
   const [loading, setLoading] = useState(false); // Loading state
 
-  // ReactFlow state for nodes and edges
-  const [nodes, setNodes] = useState(initialNodes);
-  const [edges, setEdges] = useState(initialEdges);
+ 
+//   // Handle the roadmap generation using OpenAI
+//   const handleGenerateRoadmap = async () => {
+//     setLoading(true);
+//     try {
+//       const prompt = `Generate a roadmap based on the provided project details.`; // Modify the prompt as needed
+//       const generatedRoadmap = await generateRoadmap(prompt); // Call your OpenAI function
 
-  // ReactFlow handlers for changes and connections
-  const onNodesChange = useCallback(
-    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
-    []
-  );
-  const onEdgesChange = useCallback(
-    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-    []
-  );
-  const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    []
-  );
+//       // Update roadmap text and add new nodes to the flow
+//       setRoadmap(generatedRoadmap);
 
-  // Handle the roadmap generation using OpenAI
-  const handleGenerateRoadmap = async () => {
-    setLoading(true);
-    try {
-      const prompt = `Generate a roadmap based on the provided project details.`; // Modify the prompt as needed
-      const generatedRoadmap = await generateRoadmap(prompt); // Call your OpenAI function
-
-      // Update roadmap text and add new nodes to the flow
-      setRoadmap(generatedRoadmap);
-
-      // Create new nodes based on the roadmap (for example purposes, using a placeholder)
-      const newNodes = generatedRoadmap
-        .split('\n') // Assuming roadmap is split by new lines
-        .map((step, index) => ({
-          id: (index + 2).toString(), // Unique node id
-          data: { label: step }, // Label is the step text
-          position: { x: 100 * (index + 1), y: 100 * (index + 1) },
-        }));
+//       // Create new nodes based on the roadmap (for example purposes, using a placeholder)
+//       const newNodes = generatedRoadmap
+//         .split('\n') // Assuming roadmap is split by new lines
+//         .map((step, index) => ({
+//           id: (index + 2).toString(), // Unique node id
+//           data: { label: step }, // Label is the step text
+//           position: { x: 100 * (index + 1), y: 100 * (index + 1) },
+//         }));
       
-      // Update nodes with the newly generated roadmap steps
-      setNodes((nds) => [...nds, ...newNodes]);
-    } catch (error) {
-      setRoadmap('Error generating roadmap');
-    } finally {
-      setLoading(false);
-    }
-  };
+//       // Update nodes with the newly generated roadmap steps
+//       setNodes((nds) => [...nds, ...newNodes]);
+//     } catch (error) {
+//       setRoadmap('Error generating roadmap');
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -98,7 +61,7 @@ const Dashboard = () => {
           {/* Button to Generate Roadmap */}
           <div className="bg-white p-6 rounded-lg shadow-md text-center mb-8">
             <button
-              onClick={handleGenerateRoadmap}
+            //   onClick={handleGenerateRoadmap}
               className="w-full bg-blue-600 text-white py-4 px-8 rounded-md text-lg font-bold hover:bg-blue-700 mb-8"
             >
               {loading ? 'Generating...' : 'Generate Roadmap'}
@@ -118,22 +81,7 @@ const Dashboard = () => {
               )}
             </div>
           </div>
-
-          {/* Visual Roadmap using ReactFlow */}
-          <div className="bg-white p-6 rounded-lg shadow-lg" style={{ height: '400px' }}>
-            <h2 className="text-3xl font-bold text-gray-800 mb-4">Visual Roadmap</h2>
-            <ReactFlow
-              nodes={nodes}
-              onNodesChange={onNodesChange}
-              edges={edges}
-              onEdgesChange={onEdgesChange}
-              onConnect={onConnect}
-              fitView
-            >
-              <Background />
-              <Controls />
-            </ReactFlow>
-          </div>
+          <Map />
         </main>
       </div>
     </div>
@@ -141,3 +89,4 @@ const Dashboard = () => {
 };
 
 export default Dashboard;
+
