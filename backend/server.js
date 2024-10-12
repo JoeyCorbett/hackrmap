@@ -1,29 +1,44 @@
-
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = 5000; // You can change the port if necessary
+const PORT = process.env.PORT || 3001;
 
-app.use(cors()); // Enable Cross-Origin Resource Sharing
-app.use(bodyParser.json()); // Enable parsing of JSON bodies
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// Handle form submissions from the React frontend
-app.post('/api/submit-form', (req, res) => {
-  const formData = req.body;
+// Endpoint to handle form submission
+app.post('/submit-form', (req, res) => {
+    const {
+        numTeammates,
+        skillLevels,
+        hackathonLength,
+        tracks,
+        sponsorChallenges,
+        preferredTools,
+        specialRequirements,
+    } = req.body;
 
-  // Do something with the formData (like save it to a database, process it, etc.)
-  console.log('Form data received:', formData);
+    // Log the data to the console (or handle it as needed)
+    console.log('Form Submission Received:');
+    console.log('Number of Teammates:', numTeammates);
+    console.log('Skill Levels:', skillLevels);
+    console.log('Hackathon Length (hours):', hackathonLength);
+    console.log('Tracks:', tracks);
+    console.log('Sponsor Challenges:', sponsorChallenges);
+    console.log('Preferred Tools:', preferredTools);
+    console.log('Special Requirements:', specialRequirements);
 
-  // Simulate generating a roadmap or some response
-  const roadmapResponse = { roadmap: 'This is a sample roadmap based on the form data' };
+    // Here you can add logic to save this data to a database or send an email
 
-  // Send response back to frontend
-  res.json(roadmapResponse);
+    // Send a response back to the client
+    res.status(200).json({ message: 'Form submitted successfully!' });
 });
 
 // Start the server
-app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
