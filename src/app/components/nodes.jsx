@@ -1,9 +1,9 @@
 import NodeFlow from './nodeFlow';
 import { initialNodes } from './initialNodes'; // Ensure this path is correct
 
-const App = () => {
+const Nodes = () => {
   return (
-    <div>
+    <div id='sidePanel-container'>
       <NodeFlow nodes={initialNodes} />
     </div>
   );

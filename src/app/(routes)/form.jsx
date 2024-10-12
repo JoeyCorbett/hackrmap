@@ -41,9 +41,9 @@ const MyForm = () => {
 
     const resetForm = () => {
         // Reset all the form fields to their initial state
-        setNumTeammates(1);
+        setNumTeammates(0);
         setSkillLevels(['']);
-        setHackathonLength(1);
+        setHackathonLength(0);
         setTracks([{ name: '', description: '' }]);
         setSponsorChallenges([{ name: '', description: '' }]);
         setPreferredTools([{ name: '', description: '' }]);
@@ -104,7 +104,15 @@ const MyForm = () => {
                     type="number"
                     id="numTeammates"
                     value={numTeammates}
-                    onChange={(e) => setNumTeammates(Math.max(1, Math.min(8, e.target.value)))}
+                    onChange={(e) => {
+                        const value = e.target.value;
+                        if (value === '') {
+                            setNumTeammates(value); // Permite que el input esté vacío
+                        } else {
+                            const numValue = Math.max(1, Math.min(8, Number(value))); // Aplica las restricciones si no está vacío
+                            setNumTeammates(numValue);
+                        }
+                    }}
                     className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
                     required
                     min="1"
@@ -138,18 +146,27 @@ const MyForm = () => {
             ))}
 
             {/* Hackathon Length Input */}
-            <div className="mb-4">
+<           div className="mb-4">
                 <label htmlFor="hackathonLength" className="block text-sm font-medium text-[#909ec6]">
                     Hackathon Length (in hours):
                 </label>
                 <input
-                    type="number"
-                    id="hackathonLength"
-                    value={hackathonLength}
-                    onChange={(e) => setHackathonLength(Math.max(1, e.target.value))}
-                    className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                    required
-                    min="1"
+                type="number"
+                id="hackathonLength"
+                value={hackathonLength}
+                onChange={(e) => {
+                    const value = e.target.value;
+                    if (value === '') {
+                        setHackathonLength(value); // Permite que el input esté vacío
+                    } else {
+                        const numValue = Math.max(1, Math.min(168, Number(value))); // Aplica las restricciones si no está vacío
+                        setHackathonLength(numValue);
+                    }
+                }}
+                className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                required
+                min="1"
+                max="168"
                 />
             </div>
 
