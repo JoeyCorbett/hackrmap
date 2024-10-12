@@ -1,305 +1,292 @@
-import { useState, useEffect } from 'react';
-import { submitForm } from '../../services/api';
+import React, { useState } from 'react';
 
-const Form = () => {
-  const [numTeammates, setNumTeammates] = useState(1);
-  const [skillLevels, setSkillLevels] = useState(['']);
-  const [hackathonLength, setHackathonLength] = useState('');
-  const [tracks, setTracks] = useState([{ name: '', description: '' }]);
-  const [sponsorChallenges, setSponsorChallenges] = useState([{ name: '', description: '' }]);
-  const [preferredTools, setPreferredTools] = useState([{ name: '', description: '' }]);
-  const [specialRequirements, setSpecialRequirements] = useState('');
-  const [loading, setLoading] = useState(false); // Loading state
-  const [responseMessage, setResponseMessage] = useState(''); // Message for displaying success or error
+// Function to submit form data to the backend
+const submitForm = async (formData) => {
+    const response = await fetch('http://localhost:3001/submit-form', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+    });
 
-  useEffect(() => {
-    const updatedSkillLevels = [...Array(numTeammates)].map((_, index) => skillLevels[index] || '');
-    setSkillLevels(updatedSkillLevels);
-  }, [numTeammates]);
-
-  const handleNumberInput = (setValue, min, max) => (e) => {
-    const value = Number(e.target.value);
-    if (e.target.value === '' || (value >= min && value <= max)) {
-      setValue(value);
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
     }
-  };
 
-  const handleSkillLevelChange = (index, value) => {
-    const newSkillLevels = [...skillLevels];
-    newSkillLevels[index] = value;
-    setSkillLevels(newSkillLevels);
-  };
-
-  const handleAddTrack = () => {
-    setTracks([...tracks, { name: '', description: '' }]);
-  };
-
-  const handleTrackChange = (index, field, value) => {
-    const newTracks = [...tracks];
-    newTracks[index][field] = value;
-    setTracks(newTracks);
-  };
-
-  const handleRemoveTrack = (index) => {
-    const newTracks = tracks.filter((_, i) => i !== index);
-    setTracks(newTracks);
-  };
-
-  const handleAddSponsorChallenge = () => {
-    setSponsorChallenges([...sponsorChallenges, { name: '', description: '' }]);
-  };
-
-  const handleSponsorChallengeChange = (index, field, value) => {
-    const newChallenges = [...sponsorChallenges];
-    newChallenges[index][field] = value;
-    setSponsorChallenges(newChallenges);
-  };
-
-  const handleRemoveSponsorChallenge = (index) => {
-    const newChallenges = sponsorChallenges.filter((_, i) => i !== index);
-    setSponsorChallenges(newChallenges);
-  };
-
-  const handleAddTool = () => {
-    setPreferredTools([...preferredTools, { name: '', description: '' }]);
-  };
-
-  const handleToolChange = (index, field, value) => {
-    const newTools = [...preferredTools];
-    newTools[index][field] = value;
-    setPreferredTools(newTools);
-  };
-
-  const handleRemoveTool = (index) => {
-    const newTools = preferredTools.filter((_, i) => i !== index);
-    setPreferredTools(newTools);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setLoading(true); // Start loading state
-
-    // Create an object with the form data
-    const formData = {
-      numTeammates,
-      skillLevels,
-      hackathonLength,
-      tracks,
-      sponsorChallenges,
-      preferredTools,
-      specialRequirements,
-    };
-
-    try {
-      // Call the API function to submit the form data to the Node.js backend
-      const response = await submitForm(formData);
-
-      // Handle the response from the backend
-      if (response) {
-        setResponseMessage('Success! Roadmap generated: ' + JSON.stringify(response)); // Update with success message
-      } else {
-        setResponseMessage('Error generating roadmap'); // Update with error message
-      }
-    } catch (error) {
-      setResponseMessage('Error submitting form: ' + error.message); // Handle fetch error
-    } finally {
-      setLoading(false); // Stop loading state
-    }
-  };
-
-  return (
-    <div className="flex flex-col items-center justify-start bg-gray-100 min-h-screen p-6">
-      <form onSubmit={handleSubmit} className="bg-white p-6 rounded-lg shadow-md max-w-lg w-full">
-        {/* Number of Teammates Input */}
-        <div className="mb-4">
-          <label htmlFor="numTeammates" className="block text-sm font-medium text-gray-700">
-            Number of Teammates (required):
-          </label>
-          <input
-            type="number"
-            id="numTeammates"
-            value={numTeammates}
-            onChange={handleNumberInput(setNumTeammates, 1, 8)}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-            required
-            min="1"
-            max="8"
-          />
-        </div>
-
-        {/* Individual Skill Levels Input */}
-        <div className="mb-4">
-          <label htmlFor="skillLevel" className="block text-sm font-medium text-gray-700">
-            Individual Skill Levels (required):
-          </label>
-          {skillLevels.map((level, index) => (
-            <select
-              key={index}
-              value={level}
-              onChange={(e) => handleSkillLevelChange(index, e.target.value)}
-              className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-              required
-            >
-              <option value="" disabled>Select Skill Level</option>
-              <option value="beginner">Beginner</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="advanced">Advanced</option>
-            </select>
-          ))}
-        </div>
-
-        {/* Hackathon Length Input */}
-        <div className="mb-4">
-          <label htmlFor="hackathonLength" className="block text-sm font-medium text-gray-700">
-            Hackathon Length (required - hours):
-          </label>
-          <input
-            type="number"
-            id="hackathonLength"
-            value={hackathonLength}
-            onChange={handleNumberInput(setHackathonLength, 1, 168)}
-            className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-            required
-            min="1"
-            max="168"
-          />
-        </div>
-
-        {/* Tracks Input */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Tracks (required):</label>
-          {tracks.map((track, index) => (
-            <div key={index} className="flex mb-2">
-              <input
-                type="text"
-                placeholder="Track Name"
-                value={track.name}
-                onChange={(e) => handleTrackChange(index, 'name', e.target.value)}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mr-2"
-                required
-              />
-              <textarea
-                placeholder="Track Description"
-                value={track.description}
-                onChange={(e) => handleTrackChange(index, 'description', e.target.value)}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 resize-y"
-                required
-              />
-              <button
-                type="button"
-                onClick={() => handleRemoveTrack(index)}
-                className="mt-1 bg-red-600 text-white py-1 px-2 rounded-md hover:bg-red-700 mx-2"
-              >
-                -
-              </button>
-            </div>
-          ))}
-          <button
-            type="button"
-            onClick={handleAddTrack}
-            className="mt-1 mb-2 bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700"
-          >
-            Add Track
-          </button>
-        </div>
-
-
-
-        {/* Sponsor Challenges Input */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Sponsor Challenges:</label>
-          {sponsorChallenges.map((challenge, index) => (
-            <div key={index} className="flex mb-2">
-              <input
-                type="text"
-                placeholder="Challenge Name"
-                value={challenge.name}
-                onChange={(e) => handleSponsorChallengeChange(index, 'name', e.target.value)}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mr-2"
-                required
-                style={{ height: '40px' }}
-              />
-              <textarea
-                placeholder="Challenge Description"
-                value={challenge.description}
-                onChange={(e) => handleSponsorChallengeChange(index, 'description', e.target.value)}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 resize-y"
-                required
-                style={{ height: '40px', minHeight: '40px', maxHeight: '300px' }} // Set your preferred min/max heights
-              />
-              <button
-                type="button"
-                onClick={() => handleRemoveSponsorChallenge(index)}
-                className="mt-1 bg-red-600 text-white py-1 px-2 rounded-md hover:bg-red-700 mx-2"
-                style={{ height: '40px', width: '60px' }}
-              >
-                -
-              </button>
-            </div>
-          ))}
-          <button type="button" onClick={handleAddSponsorChallenge} className="mt-1 mb-2  bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
-            Add Sponsor Challenge
-          </button>
-        </div>
-
-        {/* Preferred Tools Input */}
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700">Preferred Tools:</label>
-          {preferredTools.map((tool, index) => (
-            <div key={index} className="flex mb-2">
-              <input
-                type="text"
-                placeholder="Tool Name"
-                value={tool.name}
-                onChange={(e) => handleToolChange(index, 'name', e.target.value)}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 mr-2"
-                required
-                style={{ height: '40px' }}
-              />
-              <textarea
-                placeholder="Tool Description"
-                value={tool.description}
-                onChange={(e) => handleToolChange(index, 'description', e.target.value)}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 resize-y"
-                required
-                style={{ height: '40px', minHeight: '40px', maxHeight: '300px' }} // Set your preferred min/max heights
-              />
-              <button
-                type="button"
-                onClick={() => handleRemoveTool(index)}
-                className="mt-1 bg-red-600 text-white py-1 px-2 rounded-md hover:bg-red-700 mx-2"
-                style={{ height: '40px', width: '60px' }}
-              >
-                -
-              </button>
-            </div>
-          ))}
-          <button type="button" onClick={handleAddTool} className="mt-1 mb-2  bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
-            Add Preferred Tool
-          </button>
-        </div>
-
-        {/* Special Requirements Input */}
-        <div className="mb-4">
-          <label htmlFor="specialRequirements" className="block text-sm font-medium text-gray-700">
-            Special Requirements:
-          </label>
-          <textarea
-            id="specialRequirements"
-            value={specialRequirements}
-            onChange={(e) => setSpecialRequirements(e.target.value)}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 resize-y"
-            style={{ height: '40px', minHeight: '40px', maxHeight: '300px' }} // Set your preferred min/max heights
-          />
-        </div>
-
-        {/* Submit Button */}
-        <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded-md hover:bg-blue-700">
-          Submit
-        </button>
-      </form>
-    </div>
-  );
+    return response.json(); // Assuming the response contains JSON
 };
 
-export default Form;
+const MyForm = () => {
+    // State variables for form inputs
+    const [numTeammates, setNumTeammates] = useState(1);
+    const [skillLevels, setSkillLevels] = useState(['']);
+    const [hackathonLength, setHackathonLength] = useState(1);
+    const [tracks, setTracks] = useState([{ name: '', description: '' }]);
+    const [sponsorChallenges, setSponsorChallenges] = useState([{ name: '', description: '' }]);
+    const [preferredTools, setPreferredTools] = useState([{ name: '', description: '' }]);
+    const [specialRequirements, setSpecialRequirements] = useState('');
+    const [loading, setLoading] = useState(false);
+    const [responseMessage, setResponseMessage] = useState('');
+
+    const resetForm = () => {
+        // Reset all the form fields to their initial state
+        setNumTeammates(1);
+        setSkillLevels(['']);
+        setHackathonLength(1);
+        setTracks([{ name: '', description: '' }]);
+        setSponsorChallenges([{ name: '', description: '' }]);
+        setPreferredTools([{ name: '', description: '' }]);
+        setSpecialRequirements('');
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        setLoading(true);
+
+        // Validation
+        if (!skillLevels.every((level) => level)) {
+            setResponseMessage('Please select skill levels for all teammates.');
+            setLoading(false);
+            return;
+        }
+
+        // Create an object with the form data
+        const formData = {
+            numTeammates,
+            skillLevels,
+            hackathonLength,
+            tracks,
+            sponsorChallenges,
+            preferredTools,
+            specialRequirements,
+        };
+
+        try {
+            // Call the API function to submit the form data to the Node.js backend
+            const response = await submitForm(formData);
+
+            // Handle the response from the backend
+            if (response) {
+                setResponseMessage('Success! Roadmap generated.'); // Update with success message
+                resetForm();
+            } else {
+                setResponseMessage('Error generating roadmap'); // Update with error message
+            }
+        } catch (error) {
+            setResponseMessage('Error submitting form: ' + error.message); // Handle fetch error
+        } finally {
+            setLoading(false); // Stop loading state
+        }
+    };
+
+    return (
+      <div className="flex flex-col items-center justify-start bg-gray-900 min-h-screen p-6">
+        <form onSubmit={handleSubmit} className="bg-[#1e273b] p-6 rounded-lg shadow-md max-w-lg w-full">
+            {/* Number of Teammates Input */}
+            <div className="mb-4">
+                <label htmlFor="numTeammates" className="block text-sm font-medium text-[#909ec6]">
+                    Number of Teammates (required):
+                </label>
+                <input
+                    type="number"
+                    id="numTeammates"
+                    value={numTeammates}
+                    onChange={(e) => setNumTeammates(Math.max(1, Math.min(8, e.target.value)))}
+                    className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    required
+                    min="1"
+                    max="8"
+                />
+            </div>
+
+            {/* Skill Levels Input */}
+            {Array.from({ length: numTeammates }).map((_, index) => (
+                <div className="mb-4" key={index}>
+                    <label htmlFor={`skillLevel-${index}`} className="block text-sm font-medium text-[#909ec6]">
+                        Skill Level for Teammate {index + 1} (required):
+                    </label>
+                    <select
+                        id={`skillLevel-${index}`}
+                        value={skillLevels[index] || ''}
+                        onChange={(e) => {
+                            const newSkillLevels = [...skillLevels];
+                            newSkillLevels[index] = e.target.value;
+                            setSkillLevels(newSkillLevels);
+                        }}
+                        className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        required
+                    >
+                        <option value="">Select Skill Level</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                    </select>
+                </div>
+            ))}
+
+            {/* Hackathon Length Input */}
+            <div className="mb-4">
+                <label htmlFor="hackathonLength" className="block text-sm font-medium text-[#909ec6]">
+                    Hackathon Length (in hours):
+                </label>
+                <input
+                    type="number"
+                    id="hackathonLength"
+                    value={hackathonLength}
+                    onChange={(e) => setHackathonLength(Math.max(1, e.target.value))}
+                    className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    required
+                    min="1"
+                />
+            </div>
+
+            {/* Tracks Input */}
+            <div className="mb-4">
+                <label className="block text-sm font-medium text-[#909ec6]">Tracks (optional):</label>
+                {tracks.map((track, index) => (
+                    <div key={index} className="flex mb-2">
+                        <input
+                            type="text"
+                            placeholder="Track Name"
+                            value={track.name}
+                            onChange={(e) => {
+                                const newTracks = [...tracks];
+                                newTracks[index].name = e.target.value;
+                                setTracks(newTracks);
+                            }}
+                            className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        />
+                        <input
+                            type="text"
+                            placeholder="Track Description"
+                            value={track.description}
+                            onChange={(e) => {
+                                const newTracks = [...tracks];
+                                newTracks[index].description = e.target.value;
+                                setTracks(newTracks);
+                            }}
+                            className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ml-2"
+                        />
+                    </div>
+                ))}
+                <button
+                    type="button"
+                    onClick={() => setTracks([...tracks, { name: '', description: '' }])}
+                    className="text-gray-200 border border-black rounded-md p-1 bg-[#3262ca]"
+                >
+                    Add Track
+                </button>
+            </div>
+
+            {/* Sponsor Challenges Input */}
+            <div className="mb-4">
+                <label className="block text-sm font-medium text-[#909ec6]">Sponsor Challenges (optional):</label>
+                {sponsorChallenges.map((challenge, index) => (
+                    <div key={index} className="flex mb-2">
+                        <input
+                            type="text"
+                            placeholder="Challenge Name"
+                            value={challenge.name}
+                            onChange={(e) => {
+                                const newChallenges = [...sponsorChallenges];
+                                newChallenges[index].name = e.target.value;
+                                setSponsorChallenges(newChallenges);
+                            }}
+                            className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        />
+                        <input
+                            type="text"
+                            placeholder="Challenge Description"
+                            value={challenge.description}
+                            onChange={(e) => {
+                                const newChallenges = [...sponsorChallenges];
+                                newChallenges[index].description = e.target.value;
+                                setSponsorChallenges(newChallenges);
+                            }}
+                            className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ml-2"
+                        />
+                    </div>
+                ))}
+                <button
+                    type="button"
+                    onClick={() => setSponsorChallenges([...sponsorChallenges, { name: '', description: '' }])}
+                    className="text-gray-200 border border-black rounded-md p-1 bg-[#3262ca]"
+                >
+                    Add Challenge
+                </button>
+            </div>
+
+            {/* Preferred Tools Input */}
+            <div className="mb-4">
+                <label className="block text-sm font-medium text-[#909ec6]">Preferred Tools (optional):</label>
+                {preferredTools.map((tool, index) => (
+                    <div key={index} className="flex mb-2">
+                        <input
+                            type="text"
+                            placeholder="Tool Name"
+                            value={tool.name}
+                            onChange={(e) => {
+                                const newTools = [...preferredTools];
+                                newTools[index].name = e.target.value;
+                                setPreferredTools(newTools);
+                            }}
+                            className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        />
+                        <input
+                            type="text"
+                            placeholder="Tool Description"
+                            value={tool.description}
+                            onChange={(e) => {
+                                const newTools = [...preferredTools];
+                                newTools[index].description = e.target.value;
+                                setPreferredTools(newTools);
+                            }}
+                            className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 ml-2"
+                        />
+                    </div>
+                ))}
+                <button
+                    type="button"
+                    onClick={() => setPreferredTools([...preferredTools, { name: '', description: '' }])}
+                    className="text-gray-200 border border-black rounded-md p-1 bg-[#3262ca]"
+                >
+                    Add Tool
+                </button>
+            </div>
+
+            {/* Special Requirements Input */}
+            <div className="mb-4">
+                <label htmlFor="specialRequirements" className="block text-sm font-medium text-[#909ec6]">
+                    Special Requirements (optional):
+                </label>
+                <textarea
+                    id="specialRequirements"
+                    value={specialRequirements}
+                    onChange={(e) => setSpecialRequirements(e.target.value)}
+                    rows="3"
+                    className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                />
+            </div>
+
+            {/* Response Message */}
+            {responseMessage && (
+                <div className={`mb-4 text-sm ${responseMessage.includes('Error') ? 'text-red-600' : 'text-green-600'}`}>
+                    {responseMessage}
+                </div>
+            )}
+
+            {/* Submit Button */}
+            <button
+                type="submit"
+                className={`w-full bg-[#4b8748] text-white p-2 rounded-md shadow-md ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                disabled={loading}
+            >
+                {loading ? 'Generating...' : 'Generate Roadmap'}
+            </button>
+        </form>
+      </div>
+    );
+};
+
+export default MyForm;
