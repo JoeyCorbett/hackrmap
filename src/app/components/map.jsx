@@ -24,18 +24,9 @@ const Map = () => {
   const [edges, setEdges] = useState(initialEdges);
   const [activeNode, setActiveNode] = useState(null);
 
-  const onNodesChange = useCallback(
-    (changes) => setNodes((nds) => applyNodeChanges(changes, nds)),
-    []
-  );
-  const onEdgesChange = useCallback(
-    (changes) => setEdges((eds) => applyEdgeChanges(changes, eds)),
-    []
-  );
-  const onConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
-    []
-  );
+  const onNodesChange = useCallback((changes) => setNodes((nds) => applyNodeChanges(changes, nds)), []);
+  const onEdgesChange = useCallback((changes) => setEdges((eds) => applyEdgeChanges(changes, eds)), []);
+  const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
 
   const onNodeClick = useCallback((event, node) => {
     setActiveNode(node);
@@ -46,7 +37,7 @@ const Map = () => {
   };
 
   return (
-      <main className="h-screen w-screen"> {/* Added relative positioning */}
+      <main className="h-screen w-screen relative"> {/* Added relative positioning */}
           {/* {nodes.length === 0 && <Loading />}  */}
           {/* Added loading animation when nodes are empty */}
           <ReactFlow
@@ -58,6 +49,7 @@ const Map = () => {
             onConnect={onConnect}
             onNodeClick={onNodeClick}
             fitView
+            fitViewOptions={{ padding: .5 }}
             style={rfStyle}
           >
             <Background />
