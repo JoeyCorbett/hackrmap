@@ -4,8 +4,8 @@ const Form = () => {
   const [numTeammates, setNumTeammates] = useState(1);
   const [skillLevels, setSkillLevels] = useState(['']);
   const [hackathonLength, setHackathonLength] = useState('');
-  const [tracks, setTracks] = useState([{ name: '', description: '' }]); // State to manage tracks
-  const [sponsorChallenge, setSponsorChallenge] = useState('');
+  const [tracks, setTracks] = useState([{ name: '', description: '' }]);
+  const [sponsorChallenges, setSponsorChallenges] = useState([{ name: '', description: '' }]); // State to manage sponsor challenges
   const [tools, setTools] = useState({ backend: false, frontend: false, database: false });
   const [specialRequirements, setSpecialRequirements] = useState('');
 
@@ -13,42 +13,50 @@ const Form = () => {
     const value = Number(e.target.value);
     setNumTeammates(value);
 
-    // Update skill levels array based on the number of teammates
     const newSkillLevels = [...skillLevels];
     while (newSkillLevels.length < value) {
-      newSkillLevels.push(''); // Add empty skill levels for new teammates
+      newSkillLevels.push('');
     }
     while (newSkillLevels.length > value) {
-      newSkillLevels.pop(); // Remove skill levels for teammates that are no longer needed
+      newSkillLevels.pop();
     }
     setSkillLevels(newSkillLevels);
   };
 
   const handleSkillLevelChange = (index, value) => {
     const newSkillLevels = [...skillLevels];
-    newSkillLevels[index] = value; // Update skill level for specific teammate
+    newSkillLevels[index] = value;
     setSkillLevels(newSkillLevels);
   };
 
   const handleTrackChange = (index, field, value) => {
     const newTracks = [...tracks];
-    newTracks[index][field] = value; // Update the specific track input
+    newTracks[index][field] = value;
     setTracks(newTracks);
   };
 
   const handleAddTrack = () => {
-    setTracks([...tracks, { name: '', description: '' }]); // Add a new blank track input field
+    setTracks([...tracks, { name: '', description: '' }]);
+  };
+
+  const handleSponsorChallengeChange = (index, field, value) => {
+    const newChallenges = [...sponsorChallenges];
+    newChallenges[index][field] = value;
+    setSponsorChallenges(newChallenges);
+  };
+
+  const handleAddSponsorChallenge = () => {
+    setSponsorChallenges([...sponsorChallenges, { name: '', description: '' }]);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Handle form submission logic here
     console.log({
       numTeammates,
       skillLevels,
       hackathonLength,
       tracks,
-      sponsorChallenge,
+      sponsorChallenges,
       tools,
       specialRequirements,
     });
@@ -68,7 +76,7 @@ const Form = () => {
             onChange={(e) => handleNumTeammatesChange(e)}
             className="mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
             required
-            min="1" // Ensures that only non-negative numbers can be entered
+            min="1"
           />
         </div>
 
@@ -106,6 +114,7 @@ const Form = () => {
           />
         </div>
 
+        {/* Track Input Fields */}
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700">
             Tracks (required):
@@ -136,29 +145,35 @@ const Form = () => {
           </button>
         </div>
 
+        {/* Sponsor Challenges Input Fields */}
         <div className="mb-4">
-          <label htmlFor="sponsorChallenge" className="block text-sm font-medium text-gray-700">
+          <label className="block text-sm font-medium text-gray-700">
             Sponsor Challenges (optional):
           </label>
-          <select
-            id="sponsorChallenge"
-            value={sponsorChallenge}
-            onChange={(e) => setSponsorChallenge(e.target.value)}
-            className="mt-1 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+          {sponsorChallenges.map((challenge, index) => (
+            <div key={index} className="space-y-2 mt-2">
+              <input
+                type="text"
+                value={challenge.name}
+                onChange={(e) => handleSponsorChallengeChange(index, 'name', e.target.value)}
+                placeholder={`Challenge Name ${index + 1}`}
+                className="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
+              />
+              <textarea
+                value={challenge.description}
+                onChange={(e) => handleSponsorChallengeChange(index, 'description', e.target.value)}
+                placeholder={`Challenge Description ${index + 1}`}
+                className="p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 w-full"
+              />
+            </div>
+          ))}
+          <button
+            type="button"
+            onClick={handleAddSponsorChallenge}
+            className="mt-2 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700"
           >
-            <option value="" disabled>Select Challenge</option>
-            <option value="challenge1">Challenge 1</option>
-            <option value="challenge2">Challenge 2</option>
-            <option value="other">Other</option>
-          </select>
-          {sponsorChallenge === 'other' && (
-            <input
-              type="text"
-              placeholder="Specify other challenge"
-              className="mt-2 block w-full p-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-              onChange={(e) => setSponsorChallenge(e.target.value)}
-            />
-          )}
+            Add Sponsor Challenge
+          </button>
         </div>
 
         <div className="mb-4">
