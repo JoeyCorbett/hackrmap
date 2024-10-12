@@ -9,7 +9,7 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
-import { initialNodes } from './nodes';
+import { initialNodes } from './initialNodes';
 import { initialEdges } from './edges';
 import memo from './customNode';
 
