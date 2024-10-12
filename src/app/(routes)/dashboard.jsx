@@ -2,8 +2,7 @@
 import React, { useState } from "react";
 import NavBar from "../components/navbar";
 import { generateRoadmap } from "../../services/openAiService"; // Correct import
-import Map from "../components/map";
-
+import Map from "../components/map"; // Ensure this component renders content
 
 const Dashboard = () => {
   const [roadmap, setRoadmap] = useState(""); // For the generated roadmap from OpenAI
@@ -17,7 +16,6 @@ const Dashboard = () => {
       const generatedRoadmap = await generateRoadmap(prompt); // Call your OpenAI function
 
       // Update roadmap text and add new nodes to the flow
-      // setRoadmap(generatedRoadmap);
       console.log('Generated Roadmap:', generatedRoadmap);
     } catch (error) {
       setRoadmap("Error generating roadmap");
@@ -27,10 +25,16 @@ const Dashboard = () => {
   };
 
   return (
-    <main className="flex flex-row">
+    <div className="flex flex-row h-screen">
+      {/* The NavBar will stay fixed, and the rest of the dashboard content will flex around it */}
       <NavBar />
-      <Map />
-    </main>
+      
+      {/* Dashboard content - ensure it's styled to take up remaining screen space */}
+      <div className="flex-1 overflow-y-auto">
+        {/* Placeholder for the Map and other dashboard components */}
+        <Map />
+      </div>
+    </div>
   );
 };
 
