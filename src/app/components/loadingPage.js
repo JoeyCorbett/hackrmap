@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
 const API_URL = 'http://localhost:3001/submit-form'; // Constant for API URL
 
 const LoadingPage = () => {
@@ -67,20 +68,26 @@ const LoadingPage = () => {
     }, [navigate]);
 
     return (
-        <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white">
-            {loading ? (
-                <div className="flex flex-col items-center justify-center text-center">
-                    <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-blue-500"></div>
-                    <p className="mt-4 text-2xl">Generating your roadmap, please wait...</p>
-                </div>
-            ) : (
-                errorMessage ? (
-                    <p className="text-red-500 text-lg">{errorMessage}</p>
+        <section className="relative bg-gray-900 text-white min-h-screen flex items-center justify-center overflow-hidden">
+            {/* Starry Background */}
+            <div className="absolute inset-0 z-0 starry-background"></div>
+
+            {/* Loading Content */}
+            <div className="relative z-10 flex flex-col items-center justify-center h-screen">
+                {loading ? (
+                    <div className="flex flex-col items-center justify-center text-center">
+                        <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-blue-500"></div>
+                        <p className="mt-4 text-2xl">Generating your roadmap, please wait...</p>
+                    </div>
                 ) : (
-                    <p className="text-lg">Redirecting to your dashboard...</p>
-                )
-            )}
-        </div>
+                    errorMessage ? (
+                        <p className="text-red-500 text-lg">{errorMessage}</p>
+                    ) : (
+                        <p className="text-lg">Redirecting to your dashboard...</p>
+                    )
+                )}
+            </div>
+        </section>
     );
 };
 
