@@ -30,7 +30,7 @@ For this project, We use <strong>MERN Stack</strong>, in combination with <stron
 
 - <img src="https://img.icons8.com/color/48/000000/mongodb.png" width="20"/> <strong> MongoDB</strong> for database 
 - <img src="https://img.icons8.com/fluency/48/000000/node-js.png" width="20"/> <strong> Express.js (Node.js)</strong> for Backend 
-- <img src="https://img.icons8.com/plasticine/100/000000/react.png" width="20"/> <strong> React.js - Next.js </strong> for Frontend
+- <img src="https://img.icons8.com/plasticine/100/000000/react.png" width="20"/> <strong> React.js </strong> for Frontend
 - <strong> TailwindCSS </strong> for styling
 - <strong> OpenAI API </strong> for data generation and AI-driven functions
 - <strong> React Flow </strong> for graphical visualizations
