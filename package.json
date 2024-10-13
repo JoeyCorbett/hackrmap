@@ -17,6 +17,7 @@
     "lucide-react": "^0.452.0",
     "mongodb": "^6.9.0",
     "mongoose": "^8.7.1",
+    "node": "^20.18.0",
     "node-fetch": "^3.3.2",
     "openai": "^4.67.3",
     "punycode": "^2.3.1",
