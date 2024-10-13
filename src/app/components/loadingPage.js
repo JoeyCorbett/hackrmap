@@ -68,7 +68,7 @@ const LoadingPage = () => {
     return (
         <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white">
             {loading ? (
-                <div className="text-center">
+                <div className="flex flex-col items-center justify-center text-center">
                     <div className="animate-spin rounded-full h-32 w-32 border-t-4 border-blue-500"></div>
                     <p className="mt-4 text-2xl">Generating your roadmap, please wait...</p>
                 </div>
