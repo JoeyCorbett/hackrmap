@@ -6,7 +6,7 @@ import Form from './form';
 import Dashboard from './dashboard';
 import Learnmore from './learnmore';
 import ManageProject from './manageproject'; 
-import LoadingPage from '../components/loadingPage';
+import LoadingPage from '../components/loadingPage'
 
 function App() {
   return (
