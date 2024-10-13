@@ -25,7 +25,7 @@ const Navbar = () => {
         >
           ☰
         </button>
-        <span className="z-10 absolute left-12 top-full -translate-x-1/2 mt-16 opacity-0 group-hover:opacity-100 bg-black text-white text-base py-1 px-2 rounded transition-opacity duration-300 sm:pt-5 md:pt-8">
+        <span className="z-10 absolute left-12 -translate-x-1/2 mt-16 opacity-0 group-hover:opacity-100 bg-black text-white text-base py-1 px-2 rounded transition-opacity duration-300 sm:pt-2 md:pt-8">
           Menu
         </span>
       </div>

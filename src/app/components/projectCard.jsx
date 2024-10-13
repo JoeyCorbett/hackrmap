@@ -1,10 +1,11 @@
 import React from 'react';
-import { X } from "lucide-react";
+import { X } from 'lucide-react';
 
-const ProjectCard = ({ id, date, label, description, techStacks }) => {
-
+const ProjectCard = ({ id, projectGoals, lastUpdated, numTeammates, skillLevels, hackathonLengths, tracks, preferredTools, onClick }) => {
     const handleDeleteProject = async (id) => {
-        const response = await fetch(`https://localhost3001/delete/${id}`);
+        const response = await fetch(`https://localhost:3001/delete/${id}`, {
+            method: 'DELETE',
+        });
         if (response.ok) {
             console.log('Project deleted');
         } else {
@@ -13,28 +14,49 @@ const ProjectCard = ({ id, date, label, description, techStacks }) => {
     };
 
     return (
-        <div className="flex flex-col p-2 hover:scale-105 transition-transform ease-in-out duration-300">
-            <article className="hover:animate-background rounded-xl bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-xl transition hover:bg-[length:400%_400%] hover:shadow-sm hover:[animation-duration:_4s]">
-                <div className="flex flex-col rounded-[10px] bg-white p-4 sm:p-6 relative">
-                    <div datetime={date} className="block text-base text-gray-500">
-                        {date}
-                    </div>
-                    <button type="button" onClick={() => handleDeleteProject(id)} className="absolute top-2 right-2 text-black">
+        <div
+            className="flex flex-col p-4 hover:scale-105 transition-transform ease-in-out duration-300 cursor-pointer"
+            onClick={onClick}
+        >
+            <article className="hover:animate-background rounded-lg bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 p-0.5 shadow-lg transition hover:bg-[length:400%_400%] hover:shadow-xl hover:[animation-duration:_4s]">
+                <div className="flex flex-col rounded-lg bg-white p-5 relative shadow-md">
+                    
+                    <button
+                        type="button"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            handleDeleteProject(id);
+                        }}
+                        className="absolute top-2 right-2 p-1 text-black transition-transform hover:scale-110"
+                    >
                         <X />
                     </button>
 
-                    <a href="#" className="flex flex-col gap-0">
-                        <h1 className="text-[2rem] font-medium text-gray-900">
-                            {label}
+                    <div className="flex flex-col gap-1 mb-3">
+                        <div className="text-slate-800 text-lg" > {lastUpdated} </div>
+                        <h1 className="text-xl font-bold text-gray-900 leading-tight">
+                            {tracks}
                         </h1>
-                        <h3 className="text-xl pb-2">
-                            {description}
+                        <h3 className="text-lg text-gray-700 leading-tight">
+                            {projectGoals}
                         </h3>
-                    </a>
+                    </div>
 
-                    <div className="flex flex-wrap gap-1">
-                        {techStacks.map((tech, index) => (
-                            <span key={index} className="text-lg whitespace-nowrap rounded-full bg-purple-100 px-2.5 py-0.5 text-purple-600">
+                    <div className="text-gray-700 mb-3">
+                        <h4 className="font-semibold text-md mb-0.5 leading-tight">
+                            Teammates: <span className="font-normal">{numTeammates}</span>
+                        </h4>
+                        <h4 className="font-semibold text-md mb-0.5 leading-tight">
+                            Skill Level: <span className="font-normal">{skillLevels ? skillLevels : 'N/A'}</span>
+                        </h4>
+                        <h4 className="font-semibold text-md mb-0.5 leading-tight">
+                            Hackathon Length: <span className="font-normal">{hackathonLengths || 'N/A'}</span>
+                        </h4>
+                    </div>
+
+                    <div className="flex flex-wrap gap-2">
+                        {preferredTools.map((tech, index) => (
+                            <span key={index} className="text-xs whitespace-nowrap rounded-full bg-yellow-100 border border-yellow-300 px-3 py-1 text-yellow-600 shadow-sm hover:bg-yellow-200 transition duration-200">
                                 {tech}
                             </span>
                         ))}

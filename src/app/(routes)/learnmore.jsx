@@ -34,7 +34,7 @@ const LearnMore = () => {
                     <li><strong>Assigned Roles:</strong> Receive role assignments based on individual skill levels, ensuring that every team member contributes effectively.</li>
                 </ul>
 
-                <p className="text-xl mb-8">
+                <p className="text-xl mb-10">
                     With our tool, you can focus on what truly matters—building a remarkable project that stands out during the hackathon!
                 </p>
 
