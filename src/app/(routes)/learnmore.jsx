@@ -1,12 +1,16 @@
 import React from 'react';
 import { Github, Rocket } from 'lucide-react';
+import NavBar from "../components/navbar";
 
 const LearnMore = () => {
     return (
-        <div className="flex flex-col min-h-screen bg-gray-900 text-white font-sans">
-            <main className = "flex-1 p-10 max-w-4xl mx-auto bg-[#1e273b] shadow-2xl rounded-3xl mt-10">
-                {/* New Learn More Section */}
-                <h1 className='text-5xl text-[#dbdde2] mb-8 font-bold '>Learn More</h1>
+        <div className="flex flex-col h-screen bg-gray-900 text-white font-sans">
+            {/* Header and Navbar */}
+            <NavBar />
+
+            {/* Main Content */}
+            <main className="flex-grow p-7 max-w-4xl mx-auto bg-[#1e273b] shadow-2xl rounded-3xl mt-8 overflow-auto">
+                <h1 className='text-5xl text-[#dbdde2] mb-8 font-bold'>Learn More</h1>
                 <h2 className="text-4xl text-[#a3b2d9] mb-3 font-bold">Project Roadmap Generator</h2>
                 <p className="text-xl mb-3">
                     Our platform is designed specifically for hackathon participants looking to streamline their project development process. By entering key information such as:
@@ -35,16 +39,16 @@ const LearnMore = () => {
                 </p>
 
                 <div className="flex justify-center mt-10">
-                    <a href="#" className="flex items-center bg-[#4b8748] text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-[#30572e] transition duration-300">
+                    <a href="https://github.com/JoeyCorbett/hackrmap" target = "_blank" className="flex items-center bg-[#4b8748] text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-[#3a6b38] transition duration-300">
                         <Github className="mr-2" /> View on GitHub
                     </a>
                 </div>
             </main>
 
             {/* Footer */}
-            <footer className="bg-black bg-opacity-50 text-white py-6 text-center mt-10 shadow-lg">
+            <footer className="bg-black bg-opacity-50 text-white py-4 text-center shadow-lg">
                 <p className="flex items-center justify-center">
-                    <Rocket className="mr-2" /> © 2024 Hackathon Project - Team Name
+                    <Rocket className="mr-2" /> © 2024 HackrMap
                 </p>
             </footer>
         </div>

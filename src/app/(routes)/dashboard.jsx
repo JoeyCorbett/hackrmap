@@ -1,36 +1,29 @@
-// src/dashboard.js
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import NavBar from "../components/navbar";
-import { generateRoadmap } from "../../services/openAiService"; // Correct import
+import { useLocation } from "react-router-dom"; // For receiving roadmap data
 import Map from "../components/map";
 
-
 const Dashboard = () => {
-  const [roadmap, setRoadmap] = useState(""); // For the generated roadmap from OpenAI
-  const [loading, setLoading] = useState(false); // Loading state
+  const location = useLocation();
+  const { roadmap } = location.state || {};
 
-  // Handle the roadmap generation using OpenAI
-  const handleGenerateRoadmap = async () => {
-    setLoading(true);
-    try {
-      const prompt = `Generate a roadmap based on the provided project details.`; // Modify the prompt as needed
-      const generatedRoadmap = await generateRoadmap(prompt); // Call your OpenAI function
-
-      // Update roadmap text and add new nodes to the flow
-      // setRoadmap(generatedRoadmap);
-      console.log('Generated Roadmap:', generatedRoadmap);
-    } catch (error) {
-      setRoadmap("Error generating roadmap");
-    } finally {
-      setLoading(false);
+  useEffect(() => {
+    if (roadmap) {
+        console.log('AI-generated roadmap:', roadmap);
     }
-  };
+}, [roadmap]);  // Only run this effect when the roadmap changes
 
   return (
-    <main className="flex flex-row">
+    <div className="flex flex-row h-screen">
+      {/* The NavBar will stay fixed, and the rest of the dashboard content will flex around it */}
       <NavBar />
-      <Map />
-    </main>
+      
+      {/* Dashboard content - ensure it's styled to take up remaining screen space */}
+      <div className="map-container">
+        {/* Placeholder for the Map and other dashboard components */}
+        <Map />
+      </div>
+    </div>
   );
 };
 
