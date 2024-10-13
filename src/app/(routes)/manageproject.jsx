@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ProjectCard from "../components/projectCard";
-import NavBar from "../components/navbar";
+import Navbar2 from "../components/navbar2";
 import { projectsArr } from "../components/projects";
 import { Search } from "lucide-react";
 import ProjectPanel from "../components/projectPanel"; // Import ProjectPanel
@@ -35,7 +35,7 @@ const filteredProjects = projectsArr.filter((project) => {
   
   return (
     <div className="flex">
-      <NavBar />
+      <Navbar2 />
 
       <div className="flex flex-col w-full p-4">
         {/* Search Bar */}
