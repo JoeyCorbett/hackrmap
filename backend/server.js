@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const OpenAI = require('openai');  // Import the OpenAI SDK
 const connectDB = require('./config/database'); // Connect to your MongoDB
 const FormData = require('./models/FormData'); // MongoDB model
+const promptGuidelines = require('./promptGuidelines');
+
 require('dotenv').config(); 
 
 
@@ -53,7 +55,9 @@ app.post('/submit-form', async (req, res) => {
 
     // Generate the roadmap with OpenAI
     const prompt = `
-    Generate a detailed roadmap for a hackathon project with the following details:
+    ${promptGuidelines}
+
+    Generate a detailed roadmap for a hackathon projet with the following details:
     
     - Number of teammates: ${numTeammates}
     - Skill levels: ${skillLevels.join(', ')}

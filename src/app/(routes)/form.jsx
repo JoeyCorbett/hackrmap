@@ -75,6 +75,7 @@ const MyForm = () => {
         try {
             // Save the form data to localStorage for use in the loading page
             localStorage.setItem('formData', JSON.stringify(formData));
+            console.log("*******", JSON.stringify(formData));
 
             // Send the form data to your backend API to save in MongoDB
             const response = await fetch('http://localhost:3001/submit-form', {
