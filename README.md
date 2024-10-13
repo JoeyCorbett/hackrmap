@@ -111,8 +111,8 @@ During the last 1 and a half day, we did a lot and learn a lot!
 
 ## What's next for HackrMap 
 - We hope to refine user experience with organized and personalized graph output.
-- We are working on developing a feature that allows users to interact better with the outcome graph: it should not stop at look at the graph, but they can add more nodes along with their content, and we will use sorting algorithm and AI application to sort the new nodes into the existing graph.
-- We want to refine the model so that it can generate the outcome faster, despite growing amount of input data.
+- We are working on developing features that allow users to interact better with the outcome graph. It should not stop at just looking at the graph, but they can add more nodes along with their content, and we will use sorting algorithm and AI application to sort the new nodes into the existing graph and display them rationally to increase users' efficiency.
+- We want to refine the model so that it can generate the outcome faster, despite a growing amount of input data.
 - And more to be thought of in the future.
 
 ## Install and Run 
