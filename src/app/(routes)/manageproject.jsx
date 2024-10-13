@@ -9,6 +9,7 @@ const ManageProject = () => {
   return (
     <div className="flex">
       <NavBar />
+      
       <div className="flex flex-col w-full p-4">
         {/* Search Bar */}
         <div className="relative mb-6 w-full max-w-3xl mx-auto">

@@ -35,6 +35,19 @@ const Map = () => {
     setActiveNode(null);
   };
 
+  const onAddNode = () => {
+    // Create a new node with a unique id and random position
+    const newNode = {
+      id: `${nodes.length + 1}`,
+      data: { label: `Node ${nodes.length + 1}` },
+      position: { x: Math.random() * 400, y: Math.random() * 400 },
+    };
+
+    setNodes((nds) => [...nds, newNode]);
+  };
+
+  console.log("++++++++++++++++++", activeNode)
+  
   return (
       <main className="h-screen w-screen relative"> {/* Added relative positioning */}
           {/* {nodes.length === 0 && <Loading />}  */}
@@ -54,6 +67,15 @@ const Map = () => {
             <Background />
             <Controls />
           </ReactFlow>
+
+
+          {/* NOOOOTTTTTEEEE */}
+          <button
+            onClick={onAddNode}
+            style={{ position: 'absolute', top: 10, right: 10, zIndex: 10 }}
+          >
+            Add Node
+          </button>
         {activeNode && (
           <div className="">
             <SidePanel node={activeNode} onClose={closePanel} />
