@@ -4,8 +4,8 @@ const bodyParser = require('body-parser');
 const OpenAI = require('openai');  // Import the OpenAI SDK
 const connectDB = require('./config/database'); // Connect to your MongoDB
 const FormData = require('./models/FormData'); // MongoDB model
+const fetch = require('node-fetch');
 require('dotenv').config(); 
-
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -21,6 +21,36 @@ connectDB();
 // Initialize OpenAI SDK with API Key from .env
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
+});
+
+// GitHub API Token
+const GITHUB_API_TOKEN = process.env.GITHUB_API_TOKEN;
+
+// Fetch Repositories from GitHub API
+app.get('/api/repos', async (req, res) => {
+    const { topic, minStars = 50, minForks = 10 } = req.query;
+
+    const url = `https://api.github.com/search/repositories?q=topic:${topic}+stars:>${minStars}+forks:>${minForks}&sort=stars&order=desc`;
+
+    try {
+        const response = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Authorization': `token ${GITHUB_API_TOKEN}`,
+                'Accept': 'application/vnd.github.v3+json'
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error fetching repositories: ${response.statusText}`);
+        }
+
+        const data = await response.json();
+        res.json(data.items);  // Send the list of repositories to the frontend
+    } catch (error) {
+        console.error('Error fetching from GitHub:', error);
+        res.status(500).json({ error: 'Failed to fetch repositories' });
+    }
 });
 
 // Endpoint to handle form submission and save to MongoDB
