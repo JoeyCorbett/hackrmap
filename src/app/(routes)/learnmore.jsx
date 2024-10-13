@@ -44,13 +44,6 @@ const LearnMore = () => {
                     </a>
                 </div>
             </main>
-
-            {/* Footer */}
-            <footer className="bg-black bg-opacity-50 text-white py-4 text-center shadow-lg">
-                <p className="flex items-center justify-center">
-                    <Rocket className="mr-2" /> © 2024 HackrMap
-                </p>
-            </footer>
         </div>
     );
 };

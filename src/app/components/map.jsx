@@ -9,13 +9,15 @@ import {
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
 
-import { initialNodes } from './initialNodes';
-import { initialEdges } from './edges';
-import CustomNode from './customNode'; // Import CustomNode directly
-import SidePanel from './sidePanel';
+import { SquarePlus } from 'lucide-react'; // Icon for the Add Node button
+
+import { initialNodes } from './initialNodes'; // Initial nodes data
+import { initialEdges } from './edges'; // Initial edges data
+import CustomNode from './customNode'; // Custom node component
+import SidePanel from './sidePanel'; // Side panel for node details
 
 const rfStyle = {
-  backgroundColor: '#111827'
+  backgroundColor: '#111827', // Background color for the ReactFlow canvas
 };
 
 const Map = () => {
@@ -26,11 +28,11 @@ const Map = () => {
   const onNodesChange = useCallback((changes) => setNodes((nds) => applyNodeChanges(changes, nds)), []);
   const onEdgesChange = useCallback((changes) => setEdges((eds) => applyEdgeChanges(changes, eds)), []);
   const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
-
+  
   const onNodeClick = useCallback((event, node) => {
-    setActiveNode(node);
+    setActiveNode(node); // Set active node for the side panel
   }, []);
-
+  
   const closePanel = () => {
     setActiveNode(null);
   };
@@ -42,46 +44,49 @@ const Map = () => {
       data: { label: `Node ${nodes.length + 1}` },
       position: { x: Math.random() * 400, y: Math.random() * 400 },
     };
-
-    setNodes((nds) => [...nds, newNode]);
+    setNodes((nds) => [...nds, newNode]); // Add the new node to the existing nodes
   };
 
-  console.log("++++++++++++++++++", activeNode)
-  
   return (
-      <main className="h-screen w-screen relative"> {/* Added relative positioning */}
-          {/* {nodes.length === 0 && <Loading />}  */}
-          {/* Added loading animation when nodes are empty */}
-          <ReactFlow
-            nodes={nodes}
-            edges={edges}
-            nodeTypes={{ customNode: CustomNode }}
-            onNodesChange={onNodesChange}
-            onEdgesChange={onEdgesChange}
-            onConnect={onConnect}
-            onNodeClick={onNodeClick}
-            fitView
-            fitViewOptions={{ padding: .5 }}
-            style={rfStyle}
-          >
-            <Background />
-            <Controls />
-          </ReactFlow>
+    <main className="h-screen w-screen relative">
+      {/* Button to add a new node */}
+      <div className='absolute inline-block group'>
+        <button
+          onClick={onAddNode}
+          style={{ position: 'relative', top: 27, right: -50, zIndex: 10 }} // Adjust positioning here
+        >
+          <SquarePlus size={44} color="#ffffff" strokeWidth={0.6} /> {/* The plus icon */}
+        </button>
+        {/* Tooltip for the button */}
+        <span className="z-10 left-10 right-50 transform -translate-x-1/2 translate-y-full mt-2 opacity-0 group-hover:opacity-100 bg-black text-white text-xs py-1 px-2 rounded transition-opacity duration-300">
+          Add a Node
+        </span>
+      </div>
 
+      {/* React Flow component */}
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        nodeTypes={{ customNode: CustomNode }} // Register custom node type
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        onNodeClick={onNodeClick}
+        fitView
+        fitViewOptions={{ padding: 0.5 }}
+        style={rfStyle} // Apply styles
+      >
+        <Background />
+        <Controls />
+      </ReactFlow>
 
-          {/* NOOOOTTTTTEEEE */}
-          <button
-            onClick={onAddNode}
-            style={{ position: 'absolute', top: 10, right: 10, zIndex: 10 }}
-          >
-            Add Node
-          </button>
-        {activeNode && (
-          <div className="">
-            <SidePanel node={activeNode} onClose={closePanel} />
-          </div>
-        )}
-      </main>
+      {/* Side panel for active node */}
+      {activeNode && (
+        <div>
+          <SidePanel node={activeNode} onClose={closePanel} />
+        </div>
+      )}
+    </main>
   );
 };
 
