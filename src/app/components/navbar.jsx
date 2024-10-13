@@ -1,12 +1,19 @@
-// src/components/navbar.js
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 
 const Navbar = () => {
   const [isNavBarOpen, setIsNavBarOpen] = useState(false);
+  const location = useLocation(); // Obtener la ubicación actual
 
   const handleToggleNavbar = () => {
     setIsNavBarOpen(!isNavBarOpen);
+  };
+
+  const getLinkClass = (path) => {
+    // Si el path coincide con la ubicación actual, aplicar un estilo diferente
+    return location.pathname === path
+      ? 'block py-2 px-4 rounded bg-gray-600 text-white'
+      : 'block py-2 px-4 rounded hover:bg-gray-600 hover:text-white transition-colors duration-300 ease-in-out transform hover:scale-105';
   };
 
   return (
@@ -35,28 +42,16 @@ const Navbar = () => {
 
         {/* Navigation Links */}
         <nav className="flex-1 px-4 py-2 space-y-2">
-          <Link
-            to="/dashboard"
-            className="block py-2 px-4 rounded hover:bg-gray-700 transition-colors duration-200 ease-in-out"
-          >
+          <Link to="/dashboard" className={getLinkClass('/dashboard')}>
             Dashboard
           </Link>
-          <Link
-            to="/manageproject"
-            className="block py-2 px-4 rounded hover:bg-gray-700 transition-colors duration-200 ease-in-out"
-          >
+          <Link to="/manageproject" className={getLinkClass('/manageproject')}>
             Manage Projects
           </Link>
-          <Link
-            to="/form"
-            className="block py-2 px-4 rounded hover:bg-gray-700 transition-colors duration-200 ease-in-out"
-          >
+          <Link to="/form" className={getLinkClass('/form')}>
             Back to Form
           </Link>
-          <Link
-            to="/learnmore"
-            className="block py-2 px-4 rounded hover:bg-gray-700 transition-colors duration-200 ease-in-out"
-          >
+          <Link to="/learnmore" className={getLinkClass('/learnmore')}>
             Learn More
           </Link>
         </nav>
@@ -66,3 +61,4 @@ const Navbar = () => {
 };
 
 export default Navbar;
+

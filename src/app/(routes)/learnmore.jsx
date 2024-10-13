@@ -39,7 +39,7 @@ const LearnMore = () => {
                 </p>
 
                 <div className="flex justify-center mt-10">
-                    <a href="#" className="flex items-center bg-[#4b8748] text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-[#3a6b38] transition duration-300">
+                    <a href="https://github.com/JoeyCorbett/hackrmap" target = "_blank" className="flex items-center bg-[#4b8748] text-white px-6 py-3 rounded-full font-bold text-lg hover:bg-[#3a6b38] transition duration-300">
                         <Github className="mr-2" /> View on GitHub
                     </a>
                 </div>
