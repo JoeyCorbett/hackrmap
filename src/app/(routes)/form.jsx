@@ -2,31 +2,6 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-export const projectsArr = [];
-
-const apiUrl = 'http://localhost:3001/submit-form';
-
-// Function to submit form data to the backend
-const submitForm = async (formData) => {
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
-
-        if (!response.ok) {
-            throw new Error('Error submitting form data');
-        }
-
-        return await response.json();  // Backend response
-    } catch (error) {
-        console.error('API Error:', error);
-        throw error;
-    }
-};
 
 const MyForm = () => {
     // State variables for form inputs
@@ -36,7 +11,7 @@ const MyForm = () => {
     const [tracks, setTracks] = useState([{ name: '', description: '' }]);
     const [sponsorChallenges, setSponsorChallenges] = useState([{ name: '', description: '' }]);
     const [preferredTools, setPreferredTools] = useState([{ name: '', description: '' }]);
-    const [specialRequirements, setSpecialRequirements] = useState('');
+    const [projectGoals, setprojectGoals] = useState('');
     const [loading, setLoading] = useState(false);
     const [responseMessage, setResponseMessage] = useState('');
 
@@ -63,13 +38,13 @@ const MyForm = () => {
 
         // Create an object with the form data
         const formData = {
+            projectGoals,
             numTeammates,
             skillLevels,
             hackathonLength,
             tracks,
             sponsorChallenges,
             preferredTools,
-            specialRequirements,
         };
 
         try {
@@ -104,7 +79,28 @@ const MyForm = () => {
 
     return (
         <div className="flex flex-col items-center justify-start bg-gray-900 min-h-screen p-6 text-base">
-        <form onSubmit={handleSubmit} className="bg-[#1e273b] p-6 rounded-lg shadow-md max-w-lg w-full">
+            {/* Header */}
+            <div className="text-center text-white mb-6">
+                <h1 className="text-3xl font-bold">Roadmap Generator</h1>
+                <p className="text-lg text-gray-400">Fill out this form to generate a tailored roadmap for your hackathon project.</p>
+            </div>
+
+            <form onSubmit={handleSubmit} className="bg-[#1e273b] p-6 rounded-lg shadow-md max-w-lg w-full">
+             {/* Project Goals Input */}
+             <div className="mb-4">
+                <label htmlFor="projectGoals" className="block text-sm font-medium text-[#b3c0e3]">
+                    Project Goals (required):
+                </label>
+                <textarea
+                    id="projectGoals"
+                    value={projectGoals}
+                    onChange={(e) => setprojectGoals(e.target.value)}
+                    rows="3"
+                    required
+                    className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                    placeholder="E.g., Build a mobile app for social good or develop a tool to improve team collaboration. Outline what you aim to achieve during the hackathon."
+                />
+            </div>
             {/* Number of Teammates Input */}
             <div className="mb-4">
                 <label htmlFor="numTeammates" className="block text-sm font-medium text-[#b3c0e3]">
@@ -315,19 +311,6 @@ const MyForm = () => {
                 </button>
             </div>
 
-            {/* Special Requirements Input */}
-            <div className="mb-4">
-                <label htmlFor="specialRequirements" className="block text-sm font-medium text-[#b3c0e3]">
-                    Special Requirements (optional):
-                </label>
-                <textarea
-                    id="specialRequirements"
-                    value={specialRequirements}
-                    onChange={(e) => setSpecialRequirements(e.target.value)}
-                    rows="3"
-                    className="mt-1 p-2 block w-full border bg-gray-900 border-black text-white rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
-                />
-            </div>
 
             {/* Response Message */}
             {responseMessage && (
