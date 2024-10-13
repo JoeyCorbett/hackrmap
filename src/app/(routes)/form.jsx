@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+
+export const projectsArr = [];
+
 const apiUrl = 'http://localhost:3001/submit-form';
 
 // Function to submit form data to the backend
@@ -18,9 +21,14 @@ const submitForm = async (formData) => {
             throw new Error('Error submitting form data');
         }
 
+        projectsArr.push(response); //add new project object to the projectsArr
+
+        // console.log('Successfully submitted form data:', projectsArr);
+
         return await response.json();  // Backend response
     } catch (error) {
         console.error('API Error:', error);
+        // console.log('Successfully submitted form data:', projectsArr);
         throw error;
     }
 };
@@ -58,6 +66,7 @@ const MyForm = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
+        resetForm();
 
         // Validation
         if (!skillLevels.every((level) => level)) {

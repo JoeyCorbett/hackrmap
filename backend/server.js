@@ -90,6 +90,22 @@ app.post('/submit-form', async (req, res) => {
   }
 });
 
+
+// Delete a project
+app.delete('/delete-project', async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    // Find the project by ID and delete it
+    await FormData.findByIdAndDelete(id);
+
+    res.status(200).json({ message: 'Project deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting project:', error);
+    res.status(500).json({ error: 'Error deleting project' });
+  }
+});
+
 // Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
