@@ -14,3 +14,7 @@ The program offers a user-friendly form to streamline the creation of your proje
 ## Roadmap generation
 Once the program processes all user-provided data, it generates a detailed roadmap that outlines the essential steps to bring your project to life. The program intelligently assigns tasks to each team member based on their skill levels, ensuring that everyone plays to their strengths. Additionally, it recommends relevant technologies, skills, and resources tailored to each task, equipping participants with the necessary documentation to familiarize themselves with any specific tools they may not know.
 
+## Technologies used
+Node.js, React, MondoDB, OpenAPI and GitHub API's were used for the project. 
+
+## API integration 
