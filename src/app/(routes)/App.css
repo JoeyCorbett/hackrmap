@@ -2,21 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-
+/* Starry background */
+.starry-background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: black;
+  overflow: hidden;
 }
 
-html,
-body,
-#root,
-.app {
-  height: 100%;
-  width: 100%;
-  @apply text-lg;
-  @apply bg-gray-900;
-  @apply dark:bg-black;
+.starry-background::before,
+.starry-background::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  background-image: radial-gradient(white 1px, transparent 1px), radial-gradient(white 1px, transparent 1px);
+  background-size: 100px 100px, 50px 50px;
+  opacity: 0.3; /* Reduced opacity for stars */
+  animation: twinkling 200s infinite linear;
+}
 
+@keyframes twinkling {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-100%, -100%); }
 }

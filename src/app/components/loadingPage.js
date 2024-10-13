@@ -10,6 +10,7 @@ const LoadingPage = () => {
 
     useEffect(() => {
         let isMounted = true;
+        console.log('useEffect triggered');
 
         const fetchRoadmap = async () => {
             try {

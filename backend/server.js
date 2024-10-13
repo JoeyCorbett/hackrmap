@@ -6,7 +6,7 @@ import connectDB from "./config/database.js";
 import FormData from "./models/FormData.js";
 import dotenv from "dotenv";
 import fetch from "node-fetch";
-import promptGuidelines from "./promptGuidelines.js"
+import promptGuidelines from "./promptGuidelines.js";
 
 dotenv.config();
 
@@ -70,16 +70,26 @@ app.post("/submit-form", async (req, res) => {
 
     // STEP 1: Generate GitHub Search Keywords
     const promptForKeywords = `
-Generate 3-5 concise technical keywords or phrases based on the following details for a GitHub repository search:
+Generate 3-4 specific yet versatile technical keywords or phrases for a GitHub repository search based on the following project details:
+
 - Project Goals: ${projectGoals || "None"}
 - Tracks: ${tracks.map((track) => track.name).join(", ") || "None"}
 - Preferred Tools: ${
-  preferredTools.map((tool) => tool.name).join(", ") || "None"
-}
+      preferredTools.map((tool) => tool.name).join(", ") || "None"
+    }
 
-Ensure the keywords include a balance between specific technologies (e.g., React.js, Node.js) and broader concepts (e.g., web development, cloud integration). Avoid too niche or overly specific keywords that might result in no matches. The keywords should target repositories that reflect modern development trends and hackathon-style projects, ensuring they can be used effectively in a GitHub API search query.
+Guidelines for keyword generation:
+1. Focus on specific technologies mentioned in the project goals or preferred tools (e.g., "React", "Node.js", "TensorFlow").
+2. Include at least one broader concept related to the project's domain (e.g., "web-app", "machine-learning", "data-visualization").
+3. If applicable, include a keyword related to the project's functionality or purpose (e.g., "authentication", "real-time", "collaboration").
+4. Avoid overly generic terms like "application" or "software" on their own.
+5. Combine terms if necessary to create more specific phrases (e.g., "react-redux", "nodejs-api").
+6. Consider including a term related to hackathons or rapid development if relevant (e.g., "hackathon-project", "mvp").
+
+Ensure the keywords are specific enough to target relevant repositories but not so niche that they might result in zero matches. The goal is to find repositories that closely align with the project's tech stack and objectives while still providing a good range of results.
+
+Output the keywords as a comma-separated list without numbering or bullet points.
 `;
-
     const keywordsResponse = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [{ role: "user", content: promptForKeywords }],
