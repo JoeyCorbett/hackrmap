@@ -1,6 +1,9 @@
 
 # HackrMap - Understand flow, Hack better
 
+<p align="center">
+   <img src=https://github.com/user-attachments/assets/96a8cfbc-2e1b-48c8-89b3-4214e546f6a2/>
+</p>
 ## Table of Contents 
 <ol>
 <li to="#Inspiration"> Inspirations </li>
@@ -26,26 +29,42 @@ We also reflect on current roadmap tools and applications, and we all think that
 
 ### Welcome page
 
+<p align="center">
+   <img src=https://github.com/user-attachments/assets/cd2c6c3e-d226-4eba-a827-dcb4288dd7be/>
+</p>
+
 
 ### Learn more page
 
 Take a look and get a tour of our project.
 
+<p align="center">
+   <img src=https://github.com/user-attachments/assets/a03b2df2-d77f-4a69-b3e6-b8ed1e9cc2a0/>
+</p>
 
 ### Input form
 
 Here, we ask question to input data for out GPT model.
 
+<p align="center">
+   <img src=https://github.com/user-attachments/assets/2a5e271a-66db-4946-a614-8164c4021f3a/>
+</p>
+
 ### Dashboard
 
 You can see the graph/ roadmap generated here.
 
+<p align="center">
+   <img src=https://github.com/user-attachments/assets/178f740f-cdfe-4f34-8600-b82dbb375cee/>
+</p>
 
 ### Manage Project
 
 Your project will be saved here on submitting the input form with your roadmaps. You can delete it later.
 
-
+<p align="center">
+   <img src=https://github.com/user-attachments/assets/85ec3938-4d98-4ece-b0b4-6801696c9351/>
+</p>
 
 ### 
 ### What Tech Stacks are used? 
