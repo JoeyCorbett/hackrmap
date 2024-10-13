@@ -9,8 +9,8 @@ const LearnMore = () => {
             <NavBar />
 
             {/* Main Content */}
-            <main className="flex-grow p-7 max-w-4xl mx-auto bg-[#1e273b] shadow-2xl rounded-3xl mt-8 overflow-auto">
-                <h1 className='text-5xl text-[#dbdde2] mb-8 font-bold'>Learn More</h1>
+            <main className="flex-grow p-7 max-w-4xl mx-auto bg-[rgb(30,39,59)] shadow-2xl rounded-3xl mt-8 overflow-auto">
+                <h1 className='text-5xl text-[#dbdde2] mb-8 font-bold bg-[rgb(30,39,59)]'>Learn More</h1>
                 <h2 className="text-4xl text-[#a3b2d9] mb-3 font-bold">Project Roadmap Generator</h2>
                 <p className="text-xl mb-3">
                     Our platform is designed specifically for hackathon participants looking to streamline their project development process. By entering key information such as:
