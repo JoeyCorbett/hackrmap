@@ -6,6 +6,7 @@ import Form from './form';
 import Dashboard from './dashboard';
 import Learnmore from './learnmore';
 import ManageProject from './manageproject'; 
+import LoadingPage from '../components/loadingPage';
 
 function App() {
   return (
@@ -50,8 +51,9 @@ function App() {
             </section>
           } 
         />
-        
+        <Route path="/" element={<Form />} />
         <Route path="/form" element={<Form />} />
+        <Route path="/loading" element={<LoadingPage />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/manageProject" element={<ManageProject />} />
         <Route path="/learnmore" element={<Learnmore />} />

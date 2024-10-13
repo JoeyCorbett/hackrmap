@@ -68,19 +68,19 @@ app.post('/submit-form', async (req, res) => {
 
     // Call OpenAI using SDK
     const completion = await openai.chat.completions.create({
-      model: 'gpt-4o-mini',  // Change the model if necessary
+      model: 'gpt-3.5-turbo',  // Change the model if necessary
       messages: [
         { "role": "user", "content": prompt }
       ]
     });
-
-    console.log('OpenAI Completion Object:', completion);
     
 
     // Get the response from OpenAI
-    const roadmap = completion.choices[0].message.content;
+    const roadmap = completion.choices[0]?.message?.content;
 
-    console.log('Generated Roadmap:', roadmap);
+    if (!roadmap) {
+      throw new Error('Roadmap generation failed');
+    }
 
     // Send the roadmap back to the frontend
     res.status(200).json({ message: 'Form submitted successfully', roadmap });

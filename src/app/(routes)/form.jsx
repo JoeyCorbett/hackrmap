@@ -1,30 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const apiUrl = 'http://localhost:3001/submit-form';
-
-// Function to submit form data to the backend
-const submitForm = async (formData) => {
-    try {
-        const response = await fetch(apiUrl, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData),
-        });
-
-        if (!response.ok) {
-            throw new Error('Error submitting form data');
-        }
-
-        return await response.json();  // Backend response
-    } catch (error) {
-        console.error('API Error:', error);
-        throw error;
-    }
-};
-
+// Function to submit form data to the backend and save to MongoDB and localStorage
 const MyForm = () => {
     // State variables for form inputs
     const [numTeammates, setNumTeammates] = useState(1);
@@ -39,16 +16,6 @@ const MyForm = () => {
 
     const navigate = useNavigate();
 
-    const resetForm = () => {
-        // Reset all the form fields to their initial state
-        setNumTeammates(1);
-        setSkillLevels(['']);
-        setHackathonLength(1);
-        setTracks([{ name: '', description: '' }]);
-        setSponsorChallenges([{ name: '', description: '' }]);
-        setPreferredTools([{ name: '', description: '' }]);
-        setSpecialRequirements('');
-    };
 
     const handleRemove = (index, setState, state) => {
         const newState = state.filter((_, i) => i !== index);
@@ -56,8 +23,10 @@ const MyForm = () => {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        setLoading(true);
+        e.preventDefault(); // Prevent default behavior
+        if (loading) return; // Prevent multiple submissions
+
+        setLoading(true); // Set loading state to true
 
         // Validation
         if (!skillLevels.every((level) => level)) {
@@ -78,19 +47,31 @@ const MyForm = () => {
         };
 
         try {
-            // Call the API function to submit the form data to the Node.js backend
-            const response = await submitForm(formData);
-
-            // Handle the response from the backend
-            if (response) {
-                navigate('/dashboard', { state: { roadmap: response.roadmap } });
-            } else {
-                setResponseMessage('Error generating roadmap'); 
+            // Save the form data to localStorage for use in the loading page
+            localStorage.setItem('formData', JSON.stringify(formData));
+    
+            // Send the form data to your backend API to save in MongoDB
+            const response = await fetch('http://localhost:3001/submit-form', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),
+            });
+    
+            if (!response.ok) {
+                throw new Error('Failed to submit form to the server');
             }
+    
+            const result = await response.json();
+            console.log('Form submitted successfully:', result);
+    
+            // Redirect to loading page
+            navigate('/loading');
         } catch (error) {
-            setResponseMessage('Error submitting form: ' + error.message); // Handle fetch error
+            console.error('Error submitting the form:', error);
         } finally {
-            setLoading(false); // Stop loading state
+            setLoading(false); // Stop loading after submission is done
         }
     };
 
