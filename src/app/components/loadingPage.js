@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+const API_URL = 'http://localhost:3001/submit-form'; // Constant for API URL
+
 const LoadingPage = () => {
     const [loading, setLoading] = useState(true); // Track loading status
     const [errorMessage, setErrorMessage] = useState('');
@@ -13,20 +15,22 @@ const LoadingPage = () => {
             try {
                 // Retrieve form data from localStorage
                 const formData = JSON.parse(localStorage.getItem('formData'));
-                
+
+                console.log('**DEBUG** Form Data:', formData);
+
                 if (!formData) {
-                    setErrorMessage('No form data found. Redirecting to the form page.');
+                    setErrorMessage('No form data found. Redirecting to the form page...');
                     navigate('/form');
                     return;
                 }
 
                 // Make an API request to generate the roadmap
-                const response = await fetch('http://localhost:3001/submit-form', {
+                const response = await fetch(API_URL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(formData),  // Send the saved form data
+                    body: JSON.stringify(formData), // Send the saved form data
                 });
 
                 if (!response.ok) {
@@ -44,7 +48,7 @@ const LoadingPage = () => {
                 }
             } catch (error) {
                 console.error('Error:', error);
-                setErrorMessage('Error generating roadmap. Redirecting to the form.');
+                setErrorMessage('There was an error generating your roadmap. Redirecting to the form in 3 seconds...');
                 setTimeout(() => {
                     navigate('/form');
                 }, 3000); // Wait 3 seconds to display the error message before redirecting
@@ -57,7 +61,7 @@ const LoadingPage = () => {
         fetchRoadmap();
         
         return () => {
-            isMounted = false;  // Cleanup when the component unmounts
+            isMounted = false; // Cleanup when the component unmounts
         };
     }, [navigate]);
 
@@ -72,7 +76,7 @@ const LoadingPage = () => {
                 errorMessage ? (
                     <p className="text-red-500 text-lg">{errorMessage}</p>
                 ) : (
-                    <p>Redirecting to your dashboard...</p>
+                    <p className="text-lg">Redirecting to your dashboard...</p>
                 )
             )}
         </div>

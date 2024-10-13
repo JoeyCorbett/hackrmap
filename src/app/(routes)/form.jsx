@@ -16,7 +16,6 @@ const MyForm = () => {
 
     const navigate = useNavigate();
 
-
     const handleRemove = (index, setState, state) => {
         const newState = state.filter((_, i) => i !== index);
         setState(newState);
@@ -27,6 +26,7 @@ const MyForm = () => {
         if (loading) return; // Prevent multiple submissions
 
         setLoading(true); // Set loading state to true
+        setResponseMessage(''); // Clear any previous response messages
 
         // Validation
         if (!skillLevels.every((level) => level)) {
@@ -49,7 +49,7 @@ const MyForm = () => {
         try {
             // Save the form data to localStorage for use in the loading page
             localStorage.setItem('formData', JSON.stringify(formData));
-    
+
             // Send the form data to your backend API to save in MongoDB
             const response = await fetch('http://localhost:3001/submit-form', {
                 method: 'POST',
@@ -58,25 +58,26 @@ const MyForm = () => {
                 },
                 body: JSON.stringify(formData),
             });
-    
+
             if (!response.ok) {
                 throw new Error('Failed to submit form to the server');
             }
-    
+
             const result = await response.json();
             console.log('Form submitted successfully:', result);
-    
+
             // Redirect to loading page
             navigate('/loading');
         } catch (error) {
             console.error('Error submitting the form:', error);
+            setResponseMessage('Error submitting the form. Please try again later.');
         } finally {
             setLoading(false); // Stop loading after submission is done
         }
     };
 
     return (
-      <div className="flex flex-col items-center justify-start bg-gray-900 min-h-screen p-6 text-base">
+        <div className="flex flex-col items-center justify-start bg-gray-900 min-h-screen p-6 text-base">
         <form onSubmit={handleSubmit} className="bg-[#1e273b] p-6 rounded-lg shadow-md max-w-lg w-full">
             {/* Number of Teammates Input */}
             <div className="mb-4">
