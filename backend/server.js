@@ -6,14 +6,9 @@ import connectDB from "./config/database.js";
 import FormData from "./models/FormData.js";
 import dotenv from "dotenv";
 import fetch from "node-fetch";
-const promptGuidelines = require('./promptGuidelines');
+import promptGuidelines from "./promptGuidelines.js"
 
 dotenv.config();
-
-
-
-require('dotenv').config(); 
-
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -172,6 +167,7 @@ Ensure the keywords include a balance between specific technologies (e.g., React
 
     // STEP 3: Generate roadmap
     const promptForRoadmap = `
+    ${promptGuidelines}
     Create a detailed project roadmap based on:
     - Project Goals: ${projectGoals || "None"}
     - Team: ${numTeammates} members, Skills: ${skillLevels.join(", ")}
@@ -193,29 +189,6 @@ Ensure the keywords include a balance between specific technologies (e.g., React
     const roadmapResponse = await openai.chat.completions.create({
       model: "gpt-4o-mini",
       messages: [{ role: "user", content: promptForRoadmap }],
-    // Generate the roadmap with OpenAI
-    const prompt = `
-    ${promptGuidelines}
-
-    Generate a detailed roadmap for a hackathon projet with the following details:
-    
-    - Number of teammates: ${numTeammates}
-    - Skill levels: ${skillLevels.join(', ')}
-    - Hackathon length: ${hackathonLength} hours
-    - Tracks: ${tracks.map(track => track.name).join(', ') || 'None'}
-    - Sponsor challenges: ${sponsorChallenges.map(challenge => challenge.name).join(', ') || 'None'}
-    - Preferred tools: ${preferredTools.map(tool => tool.name).join(', ') || 'None'}
-    - Special requirements: ${specialRequirements || 'None'}
-    
-    Create a roadmap based on these details.
-    `;
-
-    // Call OpenAI using SDK
-    const completion = await openai.chat.completions.create({
-      model: 'gpt-3.5-turbo',  // Change the model if necessary
-      messages: [
-        { "role": "user", "content": prompt }
-      ]
     });
 
     const roadmap = roadmapResponse.choices[0]?.message?.content;
@@ -224,13 +197,11 @@ Ensure the keywords include a balance between specific technologies (e.g., React
       throw new Error("Roadmap generation failed");
     }
 
-    res
-      .status(200)
-      .json({
-        message: "Form submitted successfully",
-        roadmap,
-        githubRepos: top10Repos,
-      });
+    res.status(200).json({
+      message: "Form submitted successfully",
+      roadmap,
+      githubRepos: top10Repos,
+    });
   } catch (error) {
     console.error("Error processing request:", error);
     res
