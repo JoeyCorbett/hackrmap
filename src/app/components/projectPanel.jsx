@@ -2,7 +2,7 @@
 import React from 'react';
 import { X } from "lucide-react";
 
-const SidePanel = ({ node, onClose }) => {
+const ProjectPanel = ({ node, onClose }) => {
   if (!node) return null; 
 
   return (
