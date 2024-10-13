@@ -24,6 +24,30 @@ Hacking is fun, but daunting at the same time to many. We truly believe that peo
 
 We also reflect on current roadmap tools and applications, and we all think that none of them (or some we might not know?) just suggests a very general approach, or give the big picture, which is not very satisfactory and confusing to some extent. Therefore, we decided to implement OpenAI Text Completion in our app together with React Flow to streamline a whole process of hacking, or creating a technical application varied in tech stacks, tracks, and ideas! We give suggestions based on your prompts with detailed tech stacks and give useful resources for reference.
 
+### Welcome page
+
+
+### Learn more page
+
+Take a look and get a tour of our project.
+
+
+### Input form
+
+Here, we ask question to input data for out GPT model.
+
+### Dashboard
+
+You can see the graph/ roadmap generated here.
+
+
+### Manage Project
+
+Your project will be saved here on submitting the input form with your roadmaps. You can delete it later.
+
+
+
+### 
 ### What Tech Stacks are used? 
 
 For this project, We use <strong>MERN Stack</strong>, in combination with <strong>CRUD</strong> operations to perform operations on data, and especially <strong>React Flow </strong> and <strong>OpenAI API</strong> to make the app better at data generation and data streamlining, thus bringing the best experience for developers - the hackers!
@@ -65,6 +89,35 @@ During the last 1 and a half day, we did a lot and learn a lot!
 - How to develop a fullstack app using MERN stack and OpenAI API, along with some useful UI libraries.
 - Use OpenAI API, how to visualize AI-generated data with graph, new tech stacks to each of us.
 - Work in a team in a pressing environment.
+
+## What's next for HackrMap 
+- We hope to refine user experience with organized and personalized graph output.
+- We are working on developing a feature that allows users to interact better with the outcome graph: it should not stop at look at the graph, but they can add more nodes along with their content, and we will use sorting algorithm and AI application to sort the new nodes into the existing graph.
+- We want to refine the model so that it can generate the outcome faster, despite growing amount of input data.
+- And more to be thought of in the future.
+
+## Install and Run 
+
+First, clone the repository to your local machine:
+
+```bash
+git clone <repository-url>
+```
+Run frontend:
+
+```bash
+cd backend
+npm node server.js
+```
+
+Run backend:
+```bash
+npm run dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+## Usage instruction
 
 
 <strong> Happy coding ^^ </strong>
