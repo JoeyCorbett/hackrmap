@@ -11,7 +11,7 @@ The roadmap should represent a family tree structure:
   - Frontend: Light Blue
   - Backend: Light Green
   - Database: Light Yellow
-  - Other sections (like testing, deployment, etc.) can have distinct colors as well.
+  - Other sections not named here can have distinct colors as well.
 
 Please generate a list of nodes in the following format:
 - Each node should have an \`id\`, \`data\`, \`position\`, and \`style\`.
@@ -19,7 +19,7 @@ Please generate a list of nodes in the following format:
 - The \`position\` object should define \`x\` and \`y\` coordinates to create a family tree-like structure.
 - The \`style\` object should include a \`background\` color and \`border\`.
 
-Make sure the generated roadmap follows this example structure:
+Make sure the generated roadmap follows this EXAMPLE structure (it can be different based on the user's inputs):
 \`\`\`javascript
 export const initialNodes = [
     {
