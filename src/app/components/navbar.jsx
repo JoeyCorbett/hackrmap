@@ -21,7 +21,7 @@ const Navbar = () => {
       {/* Menu Button */}
       <button
         onClick={handleToggleNavbar}
-        className={`absolute top-4 left-4 w-10 h-10 bg-transparent p-2 rounded-lg text-white text-lg z-50 border border-white flex items-center justify-center ${isNavBarOpen ? 'hidden' : ''}`}
+        className={`absolute top-4 left-4 w-10 h-10 bg-transparent p-2 rounded-lg text-white text-lg z-10 border border-white flex items-center justify-center ${isNavBarOpen ? 'hidden' : ''}`}
       >
         ☰
       </button>

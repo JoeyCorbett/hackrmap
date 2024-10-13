@@ -1,7 +1,33 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-// Function to submit form data to the backend and save to MongoDB and localStorage
+
+export const projectsArr = [];
+
+const apiUrl = 'http://localhost:3001/submit-form';
+
+// Function to submit form data to the backend
+const submitForm = async (formData) => {
+    try {
+        const response = await fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData),
+        });
+
+        if (!response.ok) {
+            throw new Error('Error submitting form data');
+        }
+
+        return await response.json();  // Backend response
+    } catch (error) {
+        console.error('API Error:', error);
+        throw error;
+    }
+};
+
 const MyForm = () => {
     // State variables for form inputs
     const [numTeammates, setNumTeammates] = useState(1);
