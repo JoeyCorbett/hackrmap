@@ -33,14 +33,14 @@ function App() {
                     {/* Use Link instead of anchor tag for navigation */}
                     <Link
                       to="/form" 
-                      className="block w-full rounded border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-white focus:outline-none focus:ring active:text-opacity-75 sm:w-auto"
+                      className="block w-full rounded border border-blue-600 bg-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-white focus:outline-none focus:ring active:text-opacity-75 sm:w-auto transition-all duration-300"
                     >
                       Get Started
                     </Link>
 
                     <Link
                       to="/learnmore"
-                      className="block w-full rounded border border-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring active:bg-blue-500 sm:w-auto"
+                      className="block w-full rounded border border-blue-600 px-12 py-3 text-sm font-medium text-white hover:bg-blue-600 focus:outline-none focus:ring active:bg-blue-500 hover:text-white sm:w-auto transition-all duration-300"
                     >
                       Learn More
                     </Link>
