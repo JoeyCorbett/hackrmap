@@ -36,18 +36,10 @@ function App() {
                   <div className="mt-8 flex flex-wrap justify-center gap-4">
                     {/* Get Started Button */}
                     <Link
-                      to="/form" 
-                      className="block w-full sm:w-auto rounded-full border border-blue-600 bg-blue-600 px-12 py-3 text-sm lg:text-lg font-medium text-white hover:bg-transparent hover:border-blue-600 hover:text-white focus:outline-none focus:ring active:text-opacity-75 transition-all duration-300 ease-in-out"
+                      to="/"
+                      className="block w-full sm:w-auto rounded-full border border-blue-600 bg-blue-600 px-12 py-3 text-sm lg:text-lg font-medium text-white hover:bg-transparent hover:border-blue-600 hover:text-white focus:outline-none text-opacity-75 transition-all duration-300 ease-in-out cursor-not-allowed"
                     >
-                      Get Started
-                    </Link>
-
-                    {/* Learn More Button */}
-                    <Link
-                      to="/learnmore"
-                      className="block w-full sm:w-auto rounded-full border border-blue-600 px-12 py-3 text-sm lg:text-lg font-medium text-white hover:bg-blue-600 hover:text-white focus:outline-none focus:ring active:bg-blue-500 transition-all duration-300 ease-in-out"
-                    >
-                      Learn More
+                       Coming Soon
                     </Link>
                   </div>
                 </div>
@@ -55,11 +47,11 @@ function App() {
             </section>
           } 
         />
-        <Route path="/form" element={<Form />} />
-        <Route path="/loading" element={<LoadingPage />} />
-        <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/manageProject" element={<ManageProject />} />
-        <Route path="/learnmore" element={<Learnmore />} />
+        <Route path="/form" Navigate to="/" />
+        <Route path="/loading" Navigate to="/" />
+        <Route path="/dashboard" Navigate to="/" />
+        <Route path="/manageProject" Navigate to="/" />
+        <Route path="/learnmore" Navigate to="/" />
       </Routes>
     </Router>
   );
