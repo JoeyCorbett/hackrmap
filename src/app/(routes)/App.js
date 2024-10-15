@@ -1,6 +1,6 @@
 import './App.css'; 
 import 'semantic-ui-css/semantic.min.css';
-import { HashRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'; 
 import Form from './form'; 
 import Dashboard from './dashboard';
 import Learnmore from './learnmore';
