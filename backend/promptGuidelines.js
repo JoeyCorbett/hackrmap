@@ -73,4 +73,4 @@ export const initialNodes = [
 Ensure that the descriptions provide clear, actionable steps relevant to each section of the hackathon phases. Maintain the color coordination and structure throughout the roadmap. Return the complete JavaScript array.
 `;
 
-module.exports = promptGuidelines;
+export default promptGuidelines;

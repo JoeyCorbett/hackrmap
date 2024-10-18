@@ -1,10 +1,10 @@
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+import dotenv from "dotenv";
 import OpenAI from "openai";
 import connectDB from "./config/database.js";
 import FormData from "./models/FormData.js";
-import dotenv from "dotenv";
 import fetch from "node-fetch";
 import promptGuidelines from "./promptGuidelines.js";
 

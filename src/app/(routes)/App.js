@@ -1,11 +1,11 @@
 import './App.css'; 
 import 'semantic-ui-css/semantic.min.css';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom'; 
-import Form from './form'; 
-import Dashboard from './dashboard';
-import Learnmore from './learnmore';
-import ManageProject from './manageproject'; 
-import LoadingPage from '../components/loadingPage';
+import Form from './form.jsx'; 
+import Dashboard from './dashboard.jsx';
+import Learnmore from './learnmore.jsx';
+import ManageProject from './manageproject.jsx'; 
+import LoadingPage from '../components/loadingPage.js';
 
 function App() {
   return (

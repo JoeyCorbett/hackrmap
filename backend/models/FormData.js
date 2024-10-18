@@ -1,5 +1,4 @@
-// /backend/models/FormData.js
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 // Define the schema for form data
 const formDataSchema = new mongoose.Schema({
@@ -30,4 +29,4 @@ const formDataSchema = new mongoose.Schema({
 // Check if the model already exists, to prevent re-compilation errors
 const FormData = mongoose.models.FormData || mongoose.model('FormData', formDataSchema);
 
-module.exports = FormData;
+export default FormData;

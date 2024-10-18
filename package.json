@@ -1,6 +1,8 @@
 {
   "name": "hackrmap",
   "version": "0.1.0",
+  "type": "module",
+  "main": "server.js",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
