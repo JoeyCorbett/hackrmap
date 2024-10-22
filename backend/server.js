@@ -29,18 +29,9 @@ const openai = new OpenAI({
 // GitHub API Token
 const GITHUB_API_TOKEN = process.env.GITHUB_API_KEY;
 
-// Flag to prevent double submission
-let processingRequest = false;
-
 // Endpoint to handle form submission and save to MongoDB
 app.post("/submit-form", async (req, res) => {
-  if (processingRequest) {
-    return res
-      .status(429)
-      .json({ message: "Form is already being processed. Please wait." });
-  }
 
-  processingRequest = true;
 
   try {
     const {
@@ -53,7 +44,7 @@ app.post("/submit-form", async (req, res) => {
       preferredTools,
     } = req.body;
 
-    console.log("Form Submission Received:", req.body);
+    console.log(`[${new Date().toISOString()}] Form Submission Received:`, req.body);
 
     // Save the form data to MongoDB
     const newFormData = new FormData({
@@ -217,8 +208,6 @@ Output the keywords as a comma-separated list without numbering or bullet points
     res
       .status(500)
       .json({ error: error.message || "Error processing your request" });
-  } finally {
-    processingRequest = false;
   }
 });
 
