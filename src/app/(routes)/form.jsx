@@ -2,16 +2,15 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 
-
 const MyForm = () => {
     // State variables for form inputs
+    const [projectGoals, setprojectGoals] = useState('');
     const [numTeammates, setNumTeammates] = useState(1);
     const [skillLevels, setSkillLevels] = useState(['']);
     const [hackathonLength, setHackathonLength] = useState(1);
     const [tracks, setTracks] = useState([{ name: '', description: '' }]);
     const [sponsorChallenges, setSponsorChallenges] = useState([{ name: '', description: '' }]);
     const [preferredTools, setPreferredTools] = useState([{ name: '', description: '' }]);
-    const [projectGoals, setprojectGoals] = useState('');
     const [loading, setLoading] = useState(false);
     const [responseMessage, setResponseMessage] = useState('');
 
@@ -50,23 +49,6 @@ const MyForm = () => {
         try {
             // Save the form data to localStorage for use in the loading page
             localStorage.setItem('formData', JSON.stringify(formData));
-            console.log("*******", JSON.stringify(formData));
-
-            // Send the form data to your backend API to save in MongoDB
-            const response = await fetch('http://localhost:3001/submit-form', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(formData),
-            });
-
-            if (!response.ok) {
-                throw new Error('Failed to submit form to the server');
-            }
-
-            const result = await response.json();
-            console.log('Form submitted successfully:', result);
 
             // Redirect to loading page
             navigate('/loading');
