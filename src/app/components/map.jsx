@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import {
   ReactFlow,
   Controls,
@@ -11,8 +11,6 @@ import '@xyflow/react/dist/style.css';
 
 import { SquarePlus } from 'lucide-react'; // Icon for the Add Node button
 
-import { initialNodes } from './initialNodes'; // Initial nodes data
-import { initialEdges } from './edges'; // Initial edges data
 import CustomNode from './customNode'; // Custom node component
 import SidePanel from './sidePanel'; // Side panel for node details
 
@@ -20,9 +18,23 @@ const rfStyle = {
   backgroundColor: '#111827', // Background color for the ReactFlow canvas
 };
 
-const Map = () => {
+const Map = ({ nodes: initialNodes, edges: initialEdges}) => {
+  console.log("Map received nodes: ", initialNodes);
+  console.log("Map received edges: ", initialEdges);
+
   const [nodes, setNodes] = useState(initialNodes);
   const [edges, setEdges] = useState(initialEdges);
+
+  useEffect(() => {
+    // Update nodes and edges if initial props change
+    setNodes(initialNodes);
+    setEdges(initialEdges);
+  }, [initialNodes, initialEdges]);
+
+  console.log("Nodes passed to ReactFlow:", nodes);
+  console.log("Edges passed to ReactFlow:", edges);
+
+
   const [activeNode, setActiveNode] = useState(null);
 
   const onNodesChange = useCallback((changes) => setNodes((nds) => applyNodeChanges(changes, nds)), []);
