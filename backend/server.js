@@ -7,6 +7,7 @@ import connectDB from "./config/database.js";
 import FormData from "./models/FormData.js";
 import fetch from "node-fetch";
 import promptGuidelines from "./promptGuidelines.js";
+import JSON5 from 'json5';
 
 dotenv.config();
 
@@ -178,7 +179,7 @@ Output the keywords as a comma-separated list without numbering or bullet points
       sponsorChallenges.map((challenge) => challenge.name).join(", ") || "None"
     }
     - Tools: ${preferredTools.map((tool) => tool.name).join(", ") || "None"}
-    
+
     Relevant GitHub Repositories:
     ${top10Repos
       .map(
@@ -198,11 +199,27 @@ Output the keywords as a comma-separated list without numbering or bullet points
       throw new Error("Roadmap generation failed");
     }
 
-    res.status(200).json({
-      message: "Form submitted successfully",
-      roadmap,
-      githubRepos: top10Repos,
-    });
+      // Extract the content inside the code block
+  const codeBlockRegex = /```(?:javascript|json)?\s*([\s\S]*?)\s*```/i;
+  const codeBlockMatch = roadmap.match(codeBlockRegex);
+  let jsonContent = codeBlockMatch ? codeBlockMatch[1] : roadmap;
+
+  // Parse the content using JSON5
+  let parsedNodes;
+  try {
+    parsedNodes = JSON5.parse(jsonContent);
+  } catch (error) {
+    console.error("Failed to parse JSON:", error);
+    parsedNodes = [];
+  }
+
+  console.log("PARSED NODES:", parsedNodes);
+
+  res.status(200).json({
+    message: "Form submitted successfully",
+    roadmap: parsedNodes,
+    githubRepos: top10Repos,
+  });
   } catch (error) {
     console.error("Error processing request:", error);
     res
